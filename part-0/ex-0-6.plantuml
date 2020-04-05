@@ -1,0 +1,23 @@
+@startuml
+skinparam componentStyle uml2
+skinparam Shadowing false
+actor user
+
+title 0.6: New note
+
+user->browser+: submit
+browser->browser: create new Note
+browser->browser: add note to collection
+browser->browser: redraw
+
+note left of server
+Content-type: application/json
+Payload: {
+content: "Toupidou",
+date: "2020-04-03T18:43:15.998Z"
+}
+end note
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa 
+
+server-->browser: 201 CREATED
+@enduml
