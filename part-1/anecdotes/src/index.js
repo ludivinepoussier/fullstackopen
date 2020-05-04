@@ -32,7 +32,7 @@ const MostVotes = ({vote}) => {
   .filter( ({val}) => val === mostVote)
   .map( ({idx}) => idx )
   
-  const response = mostIndexArr.map(mostIndex => { const batata = mostIndex; return anecdotes[batata]})
+  const response = mostIndexArr.map(mostIndex => { const it = mostIndex; return anecdotes[it]})
   
   return < AnecdoteMulti arrText={response}/>
 }
