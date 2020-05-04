@@ -22,21 +22,16 @@ const Votes = ({vote}) => {
 const MostVotes = ({vote}) => {
   const mostVote = Math.max(...vote)
   const mostIndex = vote.indexOf(mostVote)
-  const mostIndexArr = [...vote].filter(vote => vote === mostVote);
+  // filter valor do MostVote com condition
 
   if (mostVote === 0) {
     return (
       <p>Please vote for your favorite anecdote.</p>
     )
-  } else if (mostIndexArr.length === 1) {
-    return (
+  }
+  return (
     <p>"{anecdotes[mostIndex]}"</p>
   )
-  } else if (mostIndexArr.length > 1) {
-    return (
-      <p>"{anecdotes[mostIndexArr]}"</p>
-  )
-  }
 }
 
 const App = (props) => {
