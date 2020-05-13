@@ -17,13 +17,6 @@ const Header = ({ course }) => {
   )
 }
 
-const Total = ({ course }) => {
-  const sum = course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises
-  return (
-    <p>Number of exercises {sum}</p>
-  )
-}
-
 const Part = ({ part }) => {
   return (
     <p>
@@ -37,6 +30,16 @@ const Content = ({ course }) => {
     <div>
       {course.parts.map(part => < Part key={part.id} part={part} />)}
     </div>
+  )
+}
+
+const Total = ({ course }) => {
+  const reducer = (acc, cur) => acc + cur
+  const arrExercises = course.parts.map(num => num.exercises)
+  const sum = arrExercises.reduce(reducer)
+
+  return (
+    <p>Number of exercises {sum}</p>
   )
 }
 
