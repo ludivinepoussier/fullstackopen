@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import Name from './components/Name'
 
-const App = () => {
-    const [persons, setPersons] = useState([
-        { name: 'Arto Hellas' }
-    ])
+const App = (props) => {
+    const [persons, setPersons] = useState(props.persons)
     const [newName, setNewName] = useState('')
 
     const addName = (event) => {
