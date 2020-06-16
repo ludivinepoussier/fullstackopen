@@ -31,7 +31,6 @@ const App = (props) => {
                         value={newName}
                         onChange={handleNameChange}/>
                 </div>
-                <div>debug: {newName}</div>
                 <div>
                     <button type="submit">add</button>
                 </div>
