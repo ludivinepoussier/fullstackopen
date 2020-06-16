@@ -6,7 +6,6 @@ const App = () => {
         { name: 'Arto Hellas' }
     ])
     const [newName, setNewName] = useState('')
-    const [showAll, setShowAll] = useState(true)
 
     const addName = (event) => {
         event.preventDefault()
@@ -23,10 +22,6 @@ const App = () => {
     const handleNameChange = (event) => {
         setNewName(event.target.value)
     }
-
-    const namesToShow = showAll
-        ? persons
-        : persons.filter(name => name.important)
 
     return (
         <div>
@@ -45,7 +40,7 @@ const App = () => {
             </form>
             <h2>Numbers</h2>
             <ul>
-                {namesToShow.map(name =>
+                {persons.map(name =>
                     <Name key={name.id} name={name} />
                 )}
             </ul>
