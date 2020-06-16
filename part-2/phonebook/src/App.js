@@ -13,6 +13,10 @@ const App = (props) => {
             id: persons.length + 1,
         }
 
+        if (persons.filter(person => person.content === nameObject.content).length > 0) {
+            window.alert(`${newName} is already added to phonebook`)
+        }
+
         setPersons(persons.concat(nameObject))
         setNewName('')
     }
