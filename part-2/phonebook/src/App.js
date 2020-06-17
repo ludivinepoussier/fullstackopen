@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Person from './components/Person'
 import PersonForm from './components/PersonForm'
+import Filter from './components/Filter'
 
 const App = (props) => {
     const [persons, setPersons] = useState(props.persons)
@@ -43,9 +44,9 @@ const App = (props) => {
     return (
         <div>
             <h2>Phonebook</h2>
-            <input
-                value={searchTerm}
-                onChange={handleFilterChange}
+            <Filter 
+                searchTerm={searchTerm}
+                handleFilterChange={handleFilterChange}
             />
 
             <h3>Add a new contact</h3>
