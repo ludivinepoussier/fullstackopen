@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Filter = (props) => {
+const Filter = ({ searchTerm, handleFilterChange}) => {
     return (
         <input
-            value={props.searchTerm}
-            onChange={props.handleFilterChange}
+            value={searchTerm}
+            onChange={handleFilterChange}
         />
     )
 }
