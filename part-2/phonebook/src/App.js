@@ -18,7 +18,7 @@ const App = (props) => {
             id: persons.length + 1,
         }
 
-        if (persons.some(it => it.name === newName)) {
+        if (persons.some(it => it.name.toLowerCase() === newName.toLowerCase())) {
             window.alert(`${newName} is already added to phonebook`)
             setNewName('')
             setNewNum('')
