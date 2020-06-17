@@ -59,7 +59,7 @@ const App = (props) => {
                 handleNumChange={handleNumChange}
             />
             
-            <h2>Numbers</h2>
+            <h2>Contact List</h2>
             <ul>
                 <List 
                     persons={persons}
