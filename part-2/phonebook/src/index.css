@@ -14,10 +14,6 @@ ul, li {
   padding: 0;
 }
 
-input {
-  margin: 0 1rem;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
