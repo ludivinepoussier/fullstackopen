@@ -59,8 +59,8 @@ const App = (props) => {
             </form>
             <h2>Numbers</h2>
             <ul>
-                {persons.map((name, num) =>
-                    <Person key={name.id} name={name} num={num}/>
+                {persons.map((data) =>
+                    <Person key={data.id} data={data} />
                 )}
             </ul>
         </div>
