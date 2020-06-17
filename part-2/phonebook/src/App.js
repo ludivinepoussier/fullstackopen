@@ -46,6 +46,9 @@ const App = (props) => {
                 value={searchTerm}
                 onChange={handleFilterChange}
             />
+
+            <h3>Add a new contact</h3>
+
             <form onSubmit={addPerson}>
                 <div>
                     name:&nbsp;
@@ -63,6 +66,7 @@ const App = (props) => {
                     <button type="submit">add</button>
                 </div>
             </form>
+            
             <h2>Numbers</h2>
             <ul>
                 {persons
