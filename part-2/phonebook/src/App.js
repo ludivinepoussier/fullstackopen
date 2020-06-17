@@ -3,9 +3,9 @@ import Person from './components/Person'
 
 const App = (props) => {
     const [persons, setPersons] = useState(props.persons)
+    const [searchTerm, setSearchTerm] = useState('');
     const [newName, setNewName] = useState('')
     const [newNum, setNewNum] = useState('')
-
 
     const addPerson = (event) => {
         event.preventDefault()
@@ -16,7 +16,7 @@ const App = (props) => {
             id: persons.length + 1,
         }
 
-        if (persons.filter(person => person.name === newName).length > 0) {
+        if (persons.some(it => it.name === newName)) {
             window.alert(`${newName} is already added to phonebook`)
             setNewName('')
             setNewNum('')
@@ -26,6 +26,10 @@ const App = (props) => {
             setNewNum('')
         }
     }
+
+    const handleFilterChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
 
     const handleNameChange = (event) => {
         setNewName(event.target.value)
@@ -38,30 +42,34 @@ const App = (props) => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <input
+                value={searchTerm}
+                onChange={handleFilterChange}
+            />
             <form onSubmit={addPerson}>
                 <div>
-                    name: 
+                    name:&nbsp;
                     <input 
                         value={newName}
                         onChange={handleNameChange}/>
                 </div>
                 <div>
-                    number: 
+                    number:&nbsp; 
                     <input 
                         value={newNum}
                         onChange={handleNumChange}/>
                 </div>
-                <div>debug: {newName}</div>
-                <div>debug: {newNum}</div>
                 <div>
                     <button type="submit">add</button>
                 </div>
             </form>
             <h2>Numbers</h2>
             <ul>
-                {persons.map((data) =>
-                    <Person key={data.id} data={data} />
-                )}
+                {persons
+                    .filter(it => it.name.toLowerCase().indexOf(searchTerm.toLowerCase())>=0)
+                    .map(it => (
+                    <Person key={it.id} data={it} />
+                ))}
             </ul>
         </div>
     )
