@@ -5,7 +5,7 @@ const List = ({persons, searchTerm}) => {
     return (
         persons.filter(it => it.name.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0)
                 .map(it => (
-                    <Person key={it.id} data={it} />
+                    <Person key={it.name} data={it} />
                 ))
         
     )
