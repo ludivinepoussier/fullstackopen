@@ -6,10 +6,10 @@ import List from './components/List'
 const App = () => {
   const [countries, setCountries] = useState([])
   const [searchTerm, setSearchTerm] = useState('');
-  const [capital, setCapital] = useState([]); 
-  const [population, setPopulation] = useState([]);
-  const [languages, setLanguages] = useState([]);
-  const [flag, setFlag] = useState([]);
+  const [capital] = useState([]); 
+  const [population] = useState([]);
+  const [languages] = useState([]);
+  const [flag] = useState([]);
 
   useEffect(() => {
     axios
@@ -20,7 +20,7 @@ const App = () => {
   }, [])
 
   const handleFilterChange = (event) => {
-    setSearchTerm(event.target.value);
+    setSearchTerm(event.target.value)
   };
 
   return (
