@@ -1,6 +1,6 @@
 import React from 'react'
-import Country from './Country'
-import Names from './Names'
+import CountryDetails from './CountryDetails'
+import CountryName from './CountryName'
 
 const List = ({ countries, searchTerm }) => {
 
@@ -8,11 +8,11 @@ const List = ({ countries, searchTerm }) => {
     
     const filtered = countries.filter(it => it.name.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0)
 
-    if (filtered.length === 0) return <div>no macth found</div>
-    if (filtered.length === 1) return <Country data={filtered[0]} />
+    if (filtered.length === 0) return <div>no match found</div>
+    if (filtered.length === 1) return <CountryDetails data={filtered[0]} />
     if (filtered.length < 11) return filtered
-        .map(it => (<Names key={it.name} data={it} />))
-    return <div>too many macthes</div>
+        .map(it => (<CountryName key={it.name} data={it} />))
+    return <div>too many matches</div>
 }
 
 export default List

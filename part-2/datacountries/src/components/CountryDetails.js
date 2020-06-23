@@ -1,6 +1,6 @@
 import React from "react";
 
-const Country = ({ data }) => {
+const CountryDetails = ({ data }) => {
 
     const countryLanguages = (languages) =>
         languages.map(language => <li key={language.name}>{language.name}</li>)
@@ -18,4 +18,4 @@ const Country = ({ data }) => {
     )
 }
 
-export default Country
+export default CountryDetails

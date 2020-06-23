@@ -1,6 +1,6 @@
 import React from "react";
 
-const Names = ({ data }) => {
+const CountryName = ({ data }) => {
 
     return (
         <ul>
@@ -10,4 +10,4 @@ const Names = ({ data }) => {
     )
 }
 
-export default Names
+export default CountryName
