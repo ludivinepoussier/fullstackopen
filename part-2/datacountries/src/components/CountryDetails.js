@@ -12,7 +12,7 @@ const CountryDetails = ({ data }) => {
             <p>Population: {data.population}</p>
             <h3>Languages</h3>
             <ul>{countryLanguages(data.languages)}</ul>
-            <img src={data.flag} width="150px" />
+            <img src={data.flag} alt="flag" width="150px" />
         </div>
 
     )
