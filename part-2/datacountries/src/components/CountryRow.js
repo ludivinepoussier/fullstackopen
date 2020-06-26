@@ -10,13 +10,13 @@ const CountryRow = ({ data }) => {
     if (!clicked) {
         return (
             <p>
-                <CountryName data={data} /> <Button onClick={handleClickShow} text = 'Show Country details' />
+                <CountryName data={data} /> <Button onClick={handleClickShow} text = 'Show' />
             </p>
         )
     }
     if (clicked) {
         return (
-            <div><CountryDetails data={data} /> <Button onClick={handleClickShow} text='Return to List' /></div>
+            <div><CountryDetails data={data} /> <Button onClick={handleClickShow} text='Hide' /></div>
         )
     }
 }
