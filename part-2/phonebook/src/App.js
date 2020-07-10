@@ -49,9 +49,7 @@ const App = () => {
                 .remove(id)
                 .then(() => {
                     setPersons(persons.filter(it => it.id !== id))
-                    setNewName('')
-                    setNewNum('')
-                }).catch((error) => console.log(error))
+                })
         }
     }
 
