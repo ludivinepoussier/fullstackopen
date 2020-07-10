@@ -41,6 +41,20 @@ const App = () => {
         }
     }
 
+    const removePerson = id => {
+        const person = persons.find(it => it.id === id)
+
+        if (window.confirm(`Delete ${person.name} ?`)) {
+            personService
+                .remove(id)
+                .then(() => {
+                    setPersons(persons.filter(person => person.id !== id))
+                    setNewName('')
+                    setNewNum('')
+                }).catch((error) => console.log(error))
+        }
+    }
+
     const handleFilterChange = (event) => {
         setSearchTerm(event.target.value);
     };
@@ -76,6 +90,7 @@ const App = () => {
                 <List 
                     persons={persons}
                     searchTerm={searchTerm}
+                    removePerson={removePerson}
                 />
             </ul>
         </div>
