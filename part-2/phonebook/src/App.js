@@ -48,7 +48,7 @@ const App = () => {
             personService
                 .remove(id)
                 .then(() => {
-                    setPersons(persons.filter(person => person.id !== id))
+                    setPersons(persons.filter(it => it.id !== id))
                     setNewName('')
                     setNewNum('')
                 }).catch((error) => console.log(error))
