@@ -11,14 +11,25 @@ const App = () => {
     const [newNum, setNewNum] = useState('')
 
     useEffect(() => {
-        personService
-            .getAll()
-            .then(initialPersons => {
-                setPersons(initialPersons)
-            })
+        async function fetchData() {
+        const initialPersons = await personService.getAll()
+        setPersons(initialPersons)
+        }
+        fetchData()
     }, [])
 
-    const addPerson = (event) => {
+    const changeNum = async () => {
+        const oldEntry = persons.find(it => it.name === newName)
+        const newEntry = { ...oldEntry, num: newNum }
+        await personService.change(oldEntry.id, newEntry)
+
+        const updatedPersons = persons.map(it => it === oldEntry
+            ? newEntry
+            : it)
+        setPersons(updatedPersons)   
+    }
+
+    const addPerson = async event => {
         event.preventDefault()
 
         const personObject = {
@@ -27,17 +38,16 @@ const App = () => {
         }
 
         if (persons.some(it => it.name.toLowerCase() === newName.toLowerCase())) {
-            window.alert(`${newName} is already added to phonebook`)
+            if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+                changeNum(newNum)
+            }
             setNewName('')
             setNewNum('')
         } else {
-            personService
-                .create(personObject)
-                .then(returnedPerson => {
-                    setPersons(persons.concat(returnedPerson))
-                    setNewName('')
-                    setNewNum('')
-                })            
+            const returnedPerson = await personService.create(personObject)
+            setPersons(persons.concat(returnedPerson))
+            setNewName('')
+            setNewNum('')           
         }
     }
 
@@ -45,11 +55,8 @@ const App = () => {
         const person = persons.find(it => it.id === id)
 
         if (window.confirm(`Delete ${person.name} ?`)) {
-            personService
-                .remove(id)
-                .then(() => {
-                    setPersons(persons.filter(it => it.id !== id))
-                })
+            personService.remove(id)
+            setPersons(persons.filter(it => it.id !== id))
         }
     }
 
