@@ -3,12 +3,15 @@ import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import List from './components/List'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
     const [newName, setNewName] = useState('')
     const [newNum, setNewNum] = useState('')
+    const [notificationMsg, setNotificationMsg] = useState(null)
+    const [notificationSuccess, setNotificationSuccess] = useState(true)
 
     useEffect(() => {
         async function fetchData() {
@@ -21,12 +24,28 @@ const App = () => {
     const changeNum = async () => {
         const oldEntry = persons.find(it => it.name === newName)
         const newEntry = { ...oldEntry, num: newNum }
-        await personService.change(oldEntry.id, newEntry)
-
-        const updatedPersons = persons.map(it => it === oldEntry
-            ? newEntry
-            : it)
-        setPersons(updatedPersons)   
+        try {
+            await personService.change(oldEntry.id, newEntry)
+            const updatedPersons = persons.map(it => it === oldEntry
+                ? newEntry
+                : it)
+            setPersons(updatedPersons)
+            setNotificationMsg(`${newName} has been updated`)
+            setNotificationSuccess(true)
+            setTimeout(() => {
+                setNotificationMsg(null)
+            }, 5000)
+        }
+        catch {
+            setNotificationMsg(`${newName} has already been removed from server`)
+            setNotificationSuccess(false)
+            setTimeout(() => {
+                setNotificationMsg(null)
+            }, 5000)
+            const serverPersons = await personService.getAll()
+            setPersons(serverPersons)
+        }
+        
     }
 
     const addPerson = async event => {
@@ -47,16 +66,37 @@ const App = () => {
             const returnedPerson = await personService.create(personObject)
             setPersons(persons.concat(returnedPerson))
             setNewName('')
-            setNewNum('')           
+            setNewNum('') 
+            setNotificationMsg(`${newName} has been added`)
+            setNotificationSuccess(true)
+            setTimeout(() => {
+                setNotificationMsg(null)
+            }, 5000)          
         }
     }
 
-    const removePerson = id => {
+    const removePerson = async (id) => {
         const person = persons.find(it => it.id === id)
 
         if (window.confirm(`Delete ${person.name} ?`)) {
-            personService.remove(id)
-            setPersons(persons.filter(it => it.id !== id))
+            try {
+                await personService.remove(id)
+                setPersons(persons.filter(it => it.id !== id))
+                setNotificationMsg(`${person.name} has been deleted`)
+                setNotificationSuccess(true)
+                setTimeout(() => {
+                    setNotificationMsg(null)
+                }, 5000)
+            }
+            catch {
+                setNotificationMsg(`${person.name} has already been removed from server`)
+                setNotificationSuccess(false)
+                setTimeout(() => {
+                    setNotificationMsg(null)
+                }, 5000)
+                const serverPersons = await personService.getAll()
+                setPersons(serverPersons)
+            }
         }
     }
 
@@ -75,6 +115,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification message={notificationMsg} success={notificationSuccess}/>
             <Filter 
                 searchTerm={searchTerm}
                 handleFilterChange={handleFilterChange}
