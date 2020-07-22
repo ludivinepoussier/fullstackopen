@@ -8,13 +8,40 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h2 {
+  color:green;
+  font-style: italic;
+}
+
 ul, li {
   list-style: none;
   margin: 0;
   padding: 0;
+  color: darkslategray;
+  font-size: 15px;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.msgSuccess {
+  color: green;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.msgError {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
