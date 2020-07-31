@@ -9,3 +9,5 @@ Helsinki, Finland.
 This repository is organized in a way each directory correspond to a _part_ of
 the Course.
 
+The exercises of the third part can be found in this [repository](https://github.com/ludivinepoussier/fullstackopen-backend).
+
