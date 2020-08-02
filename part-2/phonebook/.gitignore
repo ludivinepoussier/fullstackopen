@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# created by react-scripts build
+/build
+
 # testing
 /coverage
 
