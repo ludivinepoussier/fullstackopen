@@ -63,15 +63,27 @@ const App = () => {
             setNewName('')
             setNewNum('')
         } else {
-            const returnedPerson = await personService.create(personObject)
-            setPersons(persons.concat(returnedPerson))
-            setNewName('')
-            setNewNum('') 
-            setNotificationMsg(`${newName} has been added`)
-            setNotificationSuccess(true)
-            setTimeout(() => {
-                setNotificationMsg(null)
-            }, 5000)          
+            try {
+                const returnedPerson = await personService.create(personObject)
+                setPersons(persons.concat(returnedPerson))
+                setNewName('')
+                setNewNum('')
+                setNotificationMsg(`${newName} has been added`)
+                setNotificationSuccess(true)
+                setTimeout(() => {
+                    setNotificationMsg(null)
+                }, 5000) 
+            }
+            catch (error) {
+                console.log(`${error}`)
+                setNotificationMsg(`${error}`)
+                setNotificationSuccess(false)
+                setTimeout(() => {
+                    setNotificationMsg(null)
+                }, 5000)
+                const serverPersons = await personService.getAll()
+                setPersons(serverPersons)
+            }     
         }
     }
 
