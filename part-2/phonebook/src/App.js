@@ -22,7 +22,7 @@ const App = () => {
     }, [])
 
     const changeNum = async () => {
-        const oldEntry = persons.find(it => it.name === newName)
+        const oldEntry = persons.find(it => it.name.toLowerCase() === newName.toLowerCase())
         const newEntry = { ...oldEntry, num: newNum }
         try {
             await personService.change(oldEntry.id, newEntry)
