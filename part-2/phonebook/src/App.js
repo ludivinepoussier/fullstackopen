@@ -36,8 +36,8 @@ const App = () => {
                 setNotificationMsg(null)
             }, 5000)
         }
-        catch {
-            setNotificationMsg(`${newName} has already been removed from server`)
+        catch (error) {
+            setNotificationMsg(error.response.data.error, 'error')
             setNotificationSuccess(false)
             setTimeout(() => {
                 setNotificationMsg(null)
@@ -62,7 +62,7 @@ const App = () => {
             }
             setNewName('')
             setNewNum('')
-        } else {
+        } else {            
             try {
                 const returnedPerson = await personService.create(personObject)
                 setPersons(persons.concat(returnedPerson))
@@ -72,19 +72,17 @@ const App = () => {
                 setNotificationSuccess(true)
                 setTimeout(() => {
                     setNotificationMsg(null)
-                }, 5000) 
+                }, 5000)
             }
             catch (error) {
-                console.log(`${error}`)
-                setNotificationMsg(`${error}`)
+                setNotificationMsg(error.response.data.error, 'error')
+                setNewName('')
+                setNewNum('')
                 setNotificationSuccess(false)
                 setTimeout(() => {
                     setNotificationMsg(null)
                 }, 5000)
-                const serverPersons = await personService.getAll()
-                setPersons(serverPersons)
-            }     
-        }
+            }}  
     }
 
     const removePerson = async (id) => {
