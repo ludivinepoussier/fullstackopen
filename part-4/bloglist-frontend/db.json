@@ -1,32 +1,40 @@
 {
   "blogs": [
     {
-      "title": "Cuisine",
+      "title": "Don't pass me by",
       "author": "Ringo",
       "address": "https://example.com/",
-      "uptvotes": "5",
-      "id": 1
+      "upvotes": "6",
+      "id": 1,
+      "url": "https://example.com/"
     },
     {
-      "title": "Keep it easy",
+      "title": "Hey Jude",
       "author": "Paul",
       "address": "https://example.com/",
-      "uptvotes": "1",
+      "upvotes": "1",
       "id": 2
     },
     {
-      "title": "Vacation",
+      "title": "Imagine",
       "author": "John",
       "address": "https://example.com/",
-      "uptvotes": "3",
+      "upvotes": "3",
       "id": 3
     },
     {
-      "title": "Cinema",
+      "title": "Here comes the sun",
       "author": "George",
       "address": "https://example.com/",
-      "uptvotes": "2",
+      "upvotes": "2",
       "id": 4
+    },
+    {
+      "title": "And I'm feeling good",
+      "author": "Nina Simone",
+      "address": "https://example.com/",
+      "upvotes": "12",
+      "id": 5
     }
   ]
 }
