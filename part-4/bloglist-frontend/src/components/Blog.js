@@ -5,7 +5,7 @@ const Blog = ({ data, removeBlog }) => {
         <li>
             {`"${data.title}" by ${data.author}`}
             <br/>
-            {`${data.address}`}
+            {<a href={data.address} target="_blank">{data.address}</a>}
             <br />
             {`Votes: ${data.upvotes}`}
             <br />
