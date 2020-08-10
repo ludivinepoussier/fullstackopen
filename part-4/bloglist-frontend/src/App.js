@@ -7,7 +7,7 @@ const App = () => {
     const [blogs, setBlogs] = useState([])
     const [newBlogTitle, setNewBlogTitle] = useState('')
     const [newAuthor, setNewAuthor] = useState('')
-    const [newUrl, setNewUrl] = useState('')
+    const [newUrl, setNewUrl] = useState('https://')
     const [newUpvotes, setNewUpvotes] = useState('')
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const App = () => {
             }
             setNewBlogTitle('')
             setNewAuthor('')
-            setNewUrl('')
+            setNewUrl('https://')
             setNewUpvotes('')
         } else {
             try {
@@ -58,13 +58,13 @@ const App = () => {
                 setBlogs(blogs.concat(returnedBlog))
                 setNewBlogTitle('')
                 setNewAuthor('')
-                setNewUrl('')
+                setNewUrl('https://')
                 setNewUpvotes('')
             }
             catch (error) {
                 setNewBlogTitle('')
                 setNewAuthor('')
-                setNewUrl('')
+                setNewUrl('https://')
                 setNewUpvotes('')
             }
         }
