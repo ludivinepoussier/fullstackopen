@@ -10,6 +10,8 @@ const Blog = ({ data, removeBlog }) => {
             {`Votes: ${data.upvotes}`}
             <br />
             <button onClick={() => removeBlog(data.id)}>delete</button>
+            <br />
+            <br />
         </li>
     )
 }
