@@ -1,0 +1,27 @@
+
+# @name postHappyPath
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "any-title-{{$timestamp}}",
+    "author": "any-author-{{$timestamp}}",
+    "url": "https://example.com",
+    "likes": 8
+}
+###
+
+# @name getAllHappyPath
+GET http://localhost:3003/api/blogs
+###
+
+# @name getOneHappyPath
+GET http://localhost:3003/api/blogs/{{postHappyPath.response.body.id}}
+###
+
+# @name getOneWrongId
+GET http://localhost:3003/api/blogs/hihihihi
+###
+
+# @name deleteHappyPath
+DELETE http://localhost:3003/api/blogs/{{postHappyPath.response.body.id}}
