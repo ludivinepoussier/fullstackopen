@@ -91,6 +91,20 @@ describe('POST tests', () => {
   })
 })
 
+describe('DELETE test', () => {
+  test('blog does not exist anymore in db and status 204', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const deleteBlogId = blogsAtStart[0].id
+
+    await api
+      .delete(`/api/blogs/${deleteBlogId}`)
+      .expect(204)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
