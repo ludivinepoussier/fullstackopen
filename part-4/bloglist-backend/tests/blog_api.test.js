@@ -55,6 +55,25 @@ describe('POST tests', () => {
       'First class tests'
     )
   })
+
+  test('if the likes property is missing, it will default to the value 0', async () => {
+    const newBlog = {
+      title: 'Canonical string reduction',
+      author: 'Edsger W. Dijkstra',
+      url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html'
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+    const arrLikes = blogsAtEnd.map(it => it.likes)
+    expect(arrLikes).toContain(0)
+  })
 })
 
 afterAll(() => {
