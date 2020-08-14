@@ -74,6 +74,21 @@ describe('POST tests', () => {
     const arrLikes = blogsAtEnd.map(it => it.likes)
     expect(arrLikes).toContain(0)
   })
+
+  test('if title or url properties are missing, status 400', async () => {
+    const newBlog = {
+      author: 'Robert C. Martin',
+      likes: 10
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+  })
 })
 
 afterAll(() => {
