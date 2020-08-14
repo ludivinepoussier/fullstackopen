@@ -91,6 +91,31 @@ describe('POST tests', () => {
   })
 })
 
+describe('PUT test', () => {
+  test('blog accepts new amount of likes', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const newData = {
+      title: 'React patterns',
+      author: 'Michael Chan',
+      url: 'https://reactpatterns.com/',
+      likes: 100
+    }
+
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(newData)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    const blogUpdated = blogsAtEnd[0]
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+    expect(blogUpdated.likes).toEqual(100)
+  })
+})
+
 describe('DELETE test', () => {
   test('blog does not exist anymore in db and status 204', async () => {
     const blogsAtStart = await helper.blogsInDb()

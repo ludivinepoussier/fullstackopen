@@ -4,10 +4,32 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "any-title-{{$timestamp}}",
-    "author": "any-author-{{$timestamp}}",
-    "url": "https://example.com",
-    "likes": 8
+  "title": "any-title-{{$timestamp}}",
+  "author": "any-author-{{$timestamp}}",
+  "url": "https://example.com",
+  "likes": 8
+}
+###
+
+# @name postErrorTitleIsRequired
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "author": "any-author-{{$timestamp}}",
+  "url": "https://example.com",
+  "likes": 8
+}
+###
+
+# @name postErrorUrlIsRequired
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "any-title-{{$timestamp}}",
+  "author": "any-author-{{$timestamp}}",
+  "likes": 8
 }
 ###
 
@@ -21,6 +43,18 @@ GET http://localhost:3003/api/blogs/{{postHappyPath.response.body.id}}
 
 # @name getOneWrongId
 GET http://localhost:3003/api/blogs/hihihihi
+###
+
+# @name putHappyPath
+PUT http://localhost:3003/api/blogs/{{postHappyPath.response.body.id}}
+Content-Type: application/json
+
+{
+  "title": "{{postHappyPath.response.body.title}}",
+  "author": "{{postHappyPath.response.body.author}}",
+  "url": "https://example.com",
+  "likes": 100
+}
 ###
 
 # @name deleteHappyPath
