@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
+
+// to avoid deprecation warning
+mongoose.set('useCreateIndex', true)
 
 const userSchema = new mongoose.Schema({
-  username: String,
+  username: { type: String, required: true, minlength: 3, unique: true },
   name: String,
   passwordHash: String,
   blogs: [
@@ -11,6 +15,8 @@ const userSchema = new mongoose.Schema({
     }
   ],
 })
+
+userSchema.plugin(uniqueValidator)
 
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
