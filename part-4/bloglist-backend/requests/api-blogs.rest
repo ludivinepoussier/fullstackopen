@@ -1,5 +1,16 @@
+# @name postUserHappyPath
+POST http://localhost:3003/api/users
+Content-Type: application/json
 
-# @name postHappyPath
+{
+  "username": "any-new-username-{{$timestamp}}",
+  "name": "any-new-name-{{$timestamp}}",
+  "password": "any-new-password-{{$timestamp}}"
+}
+
+###
+
+# @name postBlogHappyPath
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
@@ -11,7 +22,7 @@ Content-Type: application/json
 }
 ###
 
-# @name postErrorTitleIsRequired
+# @name postBlogErrorTitleIsRequired
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
@@ -22,7 +33,7 @@ Content-Type: application/json
 }
 ###
 
-# @name postErrorUrlIsRequired
+# @name postBlogErrorUrlIsRequired
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
@@ -33,29 +44,33 @@ Content-Type: application/json
 }
 ###
 
-# @name getAllHappyPath
+# @name getAllBlogsHappyPath
 GET http://localhost:3003/api/blogs
 ###
 
-# @name getOneHappyPath
-GET http://localhost:3003/api/blogs/{{postHappyPath.response.body.id}}
+# @name getAllUsersHappyPath
+GET http://localhost:3003/api/users
 ###
 
-# @name getOneWrongId
+# @name getOneBlogHappyPath
+GET http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}
+###
+
+# @name getOneBlogWrongId
 GET http://localhost:3003/api/blogs/hihihihi
 ###
 
-# @name putHappyPath
-PUT http://localhost:3003/api/blogs/{{postHappyPath.response.body.id}}
+# @name putBlogHappyPath
+PUT http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}
 Content-Type: application/json
 
 {
-  "title": "{{postHappyPath.response.body.title}}",
-  "author": "{{postHappyPath.response.body.author}}",
+  "title": "{{postBlogHappyPath.response.body.title}}",
+  "author": "{{postBlogHappyPath.response.body.author}}",
   "url": "https://example.com",
   "likes": 100
 }
 ###
 
-# @name deleteHappyPath
-DELETE http://localhost:3003/api/blogs/{{postHappyPath.response.body.id}}
+# @name deleteBlogHappyPath
+DELETE http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}
