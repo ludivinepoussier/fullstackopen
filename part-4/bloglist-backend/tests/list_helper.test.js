@@ -49,7 +49,7 @@ const Blogs = [
 ]
 
 describe('dummy', () => {
-  test('dummy return one', () => {
+  xtest('dummy return one', () => {
     const blogs = []
     const result = dummy(blogs)
     expect(result).toBe(1)
@@ -57,24 +57,24 @@ describe('dummy', () => {
 })
 
 describe('total likes', () => {
-  test('of empty list is 0', () => {
+  xtest('of empty list is 0', () => {
     const result = totalLikes([])
     expect(result).toBe(0)
   })
 
-  test('when list has only one blog equals the likes of that', () => {
+  xtest('when list has only one blog equals the likes of that', () => {
     const result = totalLikes([Blogs[0]])
     expect(result).toBe(7)
   })
 
-  test('of a bigger list is calculated right', () => {
+  xtest('of a bigger list is calculated right', () => {
     const result = totalLikes(Blogs)
     expect(result).toBe(36)
   })
 })
 
 describe('favourite blog', () => {
-  test('the blog with the most likes', () => {
+  xtest('the blog with the most likes', () => {
     const result = favoriteBlog(Blogs)
     expect(result).toEqual({
       title: 'Canonical string reduction',
