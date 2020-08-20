@@ -15,7 +15,7 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
-describe('GET tests', () => {
+describe('GET blogs tests', () => {
   test('blogs are returned as json', async () => {
     await api
       .get('/api/blogs')
@@ -34,7 +34,7 @@ describe('GET tests', () => {
   })
 })
 
-describe('POST tests', () => {
+describe('POST blogs tests', () => {
   test('a valid blog can be added ', async () => {
     const newBlog = {
       title: 'First class tests',
@@ -93,7 +93,7 @@ describe('POST tests', () => {
   })
 })
 
-describe('PUT test', () => {
+describe('PUT blogs test', () => {
   test('blog accepts new amount of likes', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToUpdate = blogsAtStart[0]
@@ -118,7 +118,7 @@ describe('PUT test', () => {
   })
 })
 
-describe('DELETE test', () => {
+describe('DELETE blogs test', () => {
   test('blog does not exist anymore in db and status 204', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const deleteBlogId = blogsAtStart[0].id
@@ -132,7 +132,7 @@ describe('DELETE test', () => {
   })
 })
 
-describe('when there is initially one user at db', () => {
+describe('POST users test, when there is initially one user at db', () => {
   beforeEach(async () => {
     await User.deleteMany({})
     const user = new User({ username: 'root', password: 'sekret' })
