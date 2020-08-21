@@ -107,4 +107,8 @@ Content-Type: application/json
 ###
 
 # @name deleteBlogHappyPath
+@token = {{postLoginHappyPath.response.body.token}}
 DELETE http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}
+Authorization: bearer {{token}}
+
+###
