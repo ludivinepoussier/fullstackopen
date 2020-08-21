@@ -18,7 +18,8 @@ Content-Type: application/json
   "title": "any-title-{{$timestamp}}",
   "author": "any-author-{{$timestamp}}",
   "url": "https://example.com",
-  "likes": 8
+  "likes": 8,
+  "userId": "5f3ea6c9dddd0af464d638aa"
 }
 ###
 
