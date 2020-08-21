@@ -24,36 +24,56 @@ Content-Type: application/json
 ###
 
 # @name postBlogHappyPath
+@token = {{postLoginHappyPath.response.body.token}}
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer {{token}}
 
 {
   "title": "any-title-{{$timestamp}}",
-  "author": "any-author-{{$timestamp}}",
-  "url": "https://example.com",
-  "likes": 8,
-  "userId": "5f3ea6c9dddd0af464d638aa"
-}
-###
-
-# @name postBlogErrorTitleIsRequired
-POST http://localhost:3003/api/blogs
-Content-Type: application/json
-
-{
   "author": "any-author-{{$timestamp}}",
   "url": "https://example.com",
   "likes": 8
 }
 ###
 
-# @name postBlogErrorUrlIsRequired
+# @name postLoginWrongPassword
+@username = {{postUserHappyPath.request.body.username}}
+POST http://localhost:3003/api/login 
+Content-Type: application/json
+
+{
+  "username": "{{username}}", 
+  "password": "wrong"
+}
+
+###
+
+# @name postBlogErrorTitleIsRequired
+@token = {{postLoginHappyPath.response.body.token}}
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "title": "",
+  "author": "any-author-{{$timestamp}}",
+  "url": "https://example.com",
+  "likes": 8
+}
+
+###
+
+# @name postBlogErrorUrlIsRequired
+@token = {{postLoginHappyPath.response.body.token}}
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer {{token}}
 
 {
   "title": "any-title-{{$timestamp}}",
   "author": "any-author-{{$timestamp}}",
+  "url": "",
   "likes": 8
 }
 ###
