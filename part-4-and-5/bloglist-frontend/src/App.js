@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import Notification from './components/Notification'
+import NotificationError from './components/NotificationError'
+import NotificationSuccess from './components/NotificationSuccess'
 import './index.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
   const [newBlogTitle, setNewBlogTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('https://')
@@ -45,6 +47,10 @@ const App = () => {
     try {
       const returnedBlog = await blogService.create(blogObject)
       setBlogs(blogs.concat(returnedBlog))
+      setSuccessMessage(`new blog added: ${newBlogTitle} by ${newAuthor}`)
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
       setNewBlogTitle('')
       setNewAuthor('')
       setNewUrl('https://')
@@ -165,7 +171,8 @@ const App = () => {
     <div>
       <h1>Blogs App</h1>
 
-      <Notification message={errorMessage} />
+      <NotificationError message={errorMessage} />
+      <NotificationSuccess message={successMessage} />
 
       {user === null ?
         loginForm() :
