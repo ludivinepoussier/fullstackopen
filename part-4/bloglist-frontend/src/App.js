@@ -156,7 +156,7 @@ const App = () => {
           onChange={handleLikesChange}
         />
         </p>
-        <button type="submit">save</button>
+        <button type="submit">add to the blog list</button>
       </form>
     </>
   )
