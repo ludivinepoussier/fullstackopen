@@ -5,7 +5,8 @@ const User = require('../models/user')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog
-    .find({}).find({}).populate('user', { username: 1, name: 1, id: 1 })
+    .find({})
+    .populate('user', { username: 1, name: 1, id: 1 })
   response.json(blogs)
 })
 
@@ -44,8 +45,11 @@ blogsRouter.post('/', async (request, response) => {
 
 blogsRouter.put('/:id', async (request, response) => {
   const blog = request.body
+  blog.user = blog.user.id
 
-  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+  const updatedBlog = await Blog
+    .findByIdAndUpdate(request.params.id, blog, { new: true })
+    .populate('user', { username: 1, name: 1, id: 1 })
   response.json(updatedBlog.toJSON())
 })
 

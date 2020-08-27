@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, changeBlog }) => {
   const [showDetails, setShowDetails] = useState(false)
+
   const notShowingDetails = { display: showDetails ? 'none' : '' }
   const showingDetails = { display: showDetails ? '' : 'none' }
 
@@ -29,7 +30,7 @@ const Blog = ({ blog }) => {
     <div style={showingDetails}>
       <p style={paraStyle}>{`${blog.title} by ${blog.author}`} <button onClick={toggleDetails}>hide</button> </p>
       <p style={paraStyle}>{`url: ${blog.url}`}</p>
-        <p style={paraStyle}>{`likes: ${blog.likes}`} <button>like</button> </p>
+        <p style={paraStyle}>{`likes: ${blog.likes}`} <button onClick={changeBlog}>like</button> </p>
     </div>
   </div>
 )}

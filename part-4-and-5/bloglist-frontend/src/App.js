@@ -48,6 +48,26 @@ const App = () => {
     }
   }
 
+  const addLikes = async (id) => {
+    const blog = blogs.find(it => it.id === id)
+    const changedBlog = { ...blog, likes: blog.likes + 1 }
+    try {
+      const returnedBlog = await blogService.update(id, changedBlog)
+      setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+      setSuccessMessage(`blog updated`)
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
+    }
+    catch (error) {
+      setErrorMessage(`something went wrong: ${error}`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      console.log(error)
+    }
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -128,7 +148,7 @@ const App = () => {
             {blogForm()}
           </div>
           <h2>List of blogs</h2>
-          {blogs.map(blog => <Blog key={blog.id} blog={blog} /> )}
+          {blogs.map(blog => <Blog key={blog.id} blog={blog} changeBlog={() => addLikes(blog.id)} /> )}
         </div>
       }
 

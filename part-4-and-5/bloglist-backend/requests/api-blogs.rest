@@ -102,7 +102,13 @@ Content-Type: application/json
   "title": "{{postBlogHappyPath.response.body.title}}",
   "author": "{{postBlogHappyPath.response.body.author}}",
   "url": "https://example.com",
-  "likes": 100
+  "likes": 101,
+  "id": "5f481ed68ee4247fa15ef0ef",
+  "user":{
+    "username":"any-new-username-1597941422",
+    "name":"any-new-name-1597941422",
+    "id":"5f3ea6aedddd0af464d638a7"
+  }
 }
 ###
 
