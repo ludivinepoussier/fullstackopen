@@ -22,7 +22,10 @@ const create = async newObject => {
 }
 
 const update = async (id, changedObject) => {
-  const response = await axios.put(`${baseUrl}/${id}`, changedObject)
+  const { id: _notUsedId, ...payload } = changedObject
+  payload.user = payload.user.id
+
+  const response = await axios.put(`${baseUrl}/${id}`, payload)
   return response.data
 }
 
