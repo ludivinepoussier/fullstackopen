@@ -25,22 +25,22 @@ const Blog = ({ blog, changeBlog, removeBlog }) => {
   }
 
   return (
-  <div style={blogStyle}>
-    <div style={notShowingDetails}>
-      {blog.title} by {blog.author} <button onClick={toggleDetails}>show</button>
-    </div>
-    <div style={showingDetails}>
-      <p style={paraStyle}>{`${blog.title} by ${blog.author}`} <button onClick={toggleDetails}>hide</button> </p>
-      <p style={paraStyle}>{`url: ${blog.url}`}</p>
-      <p style={paraStyle}>{`likes: ${blog.likes}`} <button onClick={changeBlog}>like</button> </p>
-      <p style={paraStyle}>
-        {
-        loggedUser.username === blog.user.username && 
+    <div style={blogStyle}>
+      <div style={notShowingDetails}>
+        {blog.title} by {blog.author} <button onClick={toggleDetails}>show</button>
+      </div>
+      <div style={showingDetails}>
+        <p style={paraStyle}>{`${blog.title} by ${blog.author}`} <button onClick={toggleDetails}>hide</button> </p>
+        <p style={paraStyle}>{`url: ${blog.url}`}</p>
+        <p style={paraStyle}>{`likes: ${blog.likes}`} <button onClick={changeBlog}>like</button> </p>
+        <p style={paraStyle}>
+          {
+            loggedUser.username === blog.user.username &&
         <button type='button' value={blog.id} onClick={removeBlog}>remove</button>
-        }
-      </p>
+          }
+        </p>
+      </div>
     </div>
-  </div>
-)}
+  )}
 
 export default Blog

@@ -13,7 +13,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
   const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('') 
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const App = () => {
     try {
       const returnedBlog = await blogService.update(id, changedBlog)
       setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-      setSuccessMessage(`blog updated`)
+      setSuccessMessage('blog updated')
       setTimeout(() => {
         setSuccessMessage(null)
       }, 5000)
@@ -125,7 +125,7 @@ const App = () => {
       <div>
         <h2>Log in to application</h2>
         username &nbsp;
-          <input
+        <input
           type="text"
           value={username}
           name="Username"
@@ -134,7 +134,7 @@ const App = () => {
       </div>
       <div>
         password &nbsp;
-          <input
+        <input
           type="password"
           value={password}
           name="Password"
