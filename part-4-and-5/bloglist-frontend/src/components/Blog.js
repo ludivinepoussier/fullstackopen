@@ -26,10 +26,10 @@ const Blog = ({ blog, changeBlog, removeBlog }) => {
 
   return (
     <div style={blogStyle}>
-      <div style={notShowingDetails}>
+      <div style={notShowingDetails} className='notShowingDetails'>
         {blog.title} by {blog.author} <button onClick={toggleDetails}>show</button>
       </div>
-      <div style={showingDetails}>
+      <div style={showingDetails} className='showingDetails'>
         <p style={paraStyle}>{`${blog.title} by ${blog.author}`} <button onClick={toggleDetails}>hide</button> </p>
         <p style={paraStyle}>{`url: ${blog.url}`}</p>
         <p style={paraStyle}>{`likes: ${blog.likes}`} <button onClick={changeBlog}>like</button> </p>
