@@ -100,5 +100,38 @@ describe('Blog app', function () {
         cy.get('.blogList').should('not.contain', 'blog to delete')
       })
     })
+
+    describe('and several blogs are created with different numbers of likes', function () {
+      beforeEach(function () {
+        cy.createBlog({
+          title: 'blog in the middle',
+          author: 'cypress',
+          url: 'https://example.com',
+          likes: 50
+        })
+        cy.createBlog({
+          title: 'blog with the less likes',
+          author: 'cypress',
+          url: 'https://example.com',
+          likes: 5
+        })
+        cy.createBlog({
+          title: 'blog with most likes',
+          author: 'cypress',
+          url: 'https://example.com',
+          likes: 100
+        })
+      })
+
+      it('shows the blogs with 100 likes first and the one with 5 likes last', function () {
+        cy.get('.notShowingDetails').first().contains('show').click()
+        cy.get('.showingDetails').should('contain', 'likes: 100')
+        cy.get('.showingDetails').contains('hide').click()
+
+        cy.get('.notShowingDetails').last().contains('show').click()
+        cy.get('.showingDetails').should('contain', 'likes: 5')
+        cy.get('.showingDetails').last().contains('hide').click()
+      })
+    })
   })
 })
