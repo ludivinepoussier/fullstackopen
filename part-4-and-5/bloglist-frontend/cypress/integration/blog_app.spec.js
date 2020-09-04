@@ -39,7 +39,7 @@ describe('Blog app', function () {
     })
   })
 
-  describe.only('When logged in', function () {
+  describe('When logged in', function () {
     beforeEach(function () {
       cy.login({ username: 'lpoussier', password: 'hardtocrack' })
     })
@@ -51,6 +51,27 @@ describe('Blog app', function () {
       cy.get('#url').type('https://example.com')
       cy.contains('add to the blog list').click()
       cy.contains('a blog title test')
+    })
+
+    describe('and a blog exists', function () {
+      beforeEach(function () {
+        cy.createBlog({
+          title: 'another blog cypress',
+          author: 'cypress again',
+          url: 'https://example.com'
+        })
+      })
+
+      it('the like button can be clicked', function () {
+        cy.contains('show').click()
+        cy.contains('another blog cypress')
+        cy.get('#like-button').click()
+        
+        cy.get('.success')
+          .should('contain', 'blog updated')
+          .and('have.css', 'color', 'rgb(0, 128, 0)')
+          .and('have.css', 'border-style', 'solid')
+      })
     })
   })
 })
