@@ -38,4 +38,19 @@ describe('Blog app', function () {
       cy.contains('Ludivine Poussier logged in')
     })
   })
+
+  describe.only('When logged in', function () {
+    beforeEach(function () {
+      cy.login({ username: 'lpoussier', password: 'hardtocrack' })
+    })
+
+    it('A blog can be created', function () {
+      cy.contains('new blog').click()
+      cy.get('#title').type('a blog title test')
+      cy.get('#author').type('cypress')
+      cy.get('#url').type('https://example.com')
+      cy.contains('add to the blog list').click()
+      cy.contains('a blog title test')
+    })
+  })
 })
