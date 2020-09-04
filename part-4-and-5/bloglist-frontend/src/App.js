@@ -126,22 +126,24 @@ const App = () => {
         <h2>Log in to application</h2>
         username &nbsp;
         <input
-          type="text"
+          id='username'
+          type='text'
           value={username}
-          name="Username"
+          name='Username'
           onChange={({ target }) => setUsername(target.value)}
         />
       </div>
       <div>
         password &nbsp;
         <input
-          type="password"
+          id='password'
+          type='password'
           value={password}
-          name="Password"
+          name='Password'
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <button id='login-button' type="submit">login</button>
     </form>
   )
 
@@ -164,7 +166,7 @@ const App = () => {
         loginForm() :
         <div>
           <div>
-            <p>{user.username} logged in</p>
+            <p>{user.name} logged in</p>
             <button onClick={logout}>
               logout
             </button>
