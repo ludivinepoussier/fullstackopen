@@ -25,12 +25,7 @@ const AnecdoteForm = (props) => {
   )
 }
 
-const mapDispatchToProps = {
-  createAnecdote,
-  setNotification
-}
-
 export default connect(
   null,
-  mapDispatchToProps
+  { createAnecdote, setNotification }
 )(AnecdoteForm)

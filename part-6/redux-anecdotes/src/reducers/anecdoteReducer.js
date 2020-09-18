@@ -28,7 +28,7 @@ export const createAnecdote = content => {
     const newAnecdote = await anecdoteService.createNew(content)
     dispatch({
       type: 'NEW_ANECDOTE',
-      data: newAnecdote,
+      data: newAnecdote
     })
   }
 }
@@ -38,7 +38,7 @@ export const initializeAnecdotes = () => {
     const anecdotes = await anecdoteService.getAll()
     dispatch({
       type: 'INIT_ANECDOTES',
-      data: anecdotes,
+      data: anecdotes
     })
   }
 }
