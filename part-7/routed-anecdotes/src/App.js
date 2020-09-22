@@ -5,6 +5,7 @@ import {
   Route, 
   Link, 
   useRouteMatch,
+  useHistory,
 } from "react-router-dom"
 
 const Menu = () => {
@@ -30,9 +31,15 @@ const Anecdote = ({ anecdote }) => {
   )
 }
 
-const AnecdoteList = ({ anecdotes }) => (
+const AnecdoteList = ({ anecdotes, notification }) => {
+  const style = {
+    border: '2px solid green',
+    padding: '5px'
+  }
+  return(
   <div>
     <h2>Anecdotes</h2>
+      {notification ? <div style={style}>{notification}</div> : null}
     <ul>
       {anecdotes.map(anecdote => 
         <li key={anecdote.id}>
@@ -41,7 +48,8 @@ const AnecdoteList = ({ anecdotes }) => (
       )}
     </ul>
   </div>
-)
+  )
+}
 
 const About = () => (
   <div>
@@ -69,6 +77,8 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
+  const history = useHistory() 
+
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
@@ -82,6 +92,7 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    history.push('/')
   }
 
   return (
@@ -130,6 +141,10 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`"${anecdote.content}" has been created`)
+    setTimeout(() => {
+      setNotification(null)
+    }, 10000)
   }
 
   const anecdoteById = (id) =>
@@ -168,7 +183,7 @@ const App = () => {
           <About />
         </Route>
         <Route path="/">
-          <AnecdoteList anecdotes={anecdotes} />
+          <AnecdoteList anecdotes={anecdotes} notification={notification}/>
         </Route>
       </Switch>
 
