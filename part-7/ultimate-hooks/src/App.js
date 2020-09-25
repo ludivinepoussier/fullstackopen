@@ -1,4 +1,3 @@
-  
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -10,24 +9,33 @@ const useField = (type) => {
     setValue(event.target.value)
   }
 
+  const onReset = () => {
+    setValue('')
+  }
+
   return {
     type,
     value,
-    onChange
+    onChange,
+    onReset
   }
 }
 
 const useResource = (baseUrl) => {
   const [resources, setResources] = useState([])
 
-  // ...
+  const getAll = async () => {
+    const response = await axios.get(baseUrl)
+    setResources(response.data)
+  }
 
-  const create = (resource) => {
-    // ...
+  const create = async (resource) => {
+    const response = await axios.post(baseUrl, resource)
+    setResources([...resources, response.data])
   }
 
   const service = {
-    create
+    create, getAll
   }
 
   return [
@@ -43,14 +51,22 @@ const App = () => {
   const [notes, noteService] = useResource('http://localhost:3005/notes')
   const [persons, personService] = useResource('http://localhost:3005/persons')
 
+  useEffect(() => {
+    noteService.getAll()
+    personService.getAll()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps 
+
   const handleNoteSubmit = (event) => {
     event.preventDefault()
     noteService.create({ content: content.value })
+    content.onReset()
   }
  
   const handlePersonSubmit = (event) => {
     event.preventDefault()
     personService.create({ name: name.value, number: number.value})
+    name.onReset()
+    number.onReset()
   }
 
   return (
