@@ -1,0 +1,116 @@
+# @name postUserHappyPath
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "any-new-username-{{$timestamp}}",
+  "name": "any-new-name-{{$timestamp}}",
+  "password": "any-new-password-{{$timestamp}}"
+}
+
+###
+
+# @name postLoginHappyPath
+@username = {{postUserHappyPath.request.body.username}}
+@password = {{postUserHappyPath.request.body.password}}
+POST http://localhost:3003/api/login 
+Content-Type: application/json
+
+{
+  "username": "{{username}}", 
+  "password": "{{password}}"
+}
+
+###
+
+# @name postBlogHappyPath
+@token = {{postLoginHappyPath.response.body.token}}
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "title": "any-title-{{$timestamp}}",
+  "author": "any-author-{{$timestamp}}",
+  "url": "https://example.com",
+  "likes": 8
+}
+###
+
+# @name postLoginWrongPassword
+@username = {{postUserHappyPath.request.body.username}}
+POST http://localhost:3003/api/login 
+Content-Type: application/json
+
+{
+  "username": "{{username}}", 
+  "password": "wrong"
+}
+
+###
+
+# @name postBlogErrorTitleIsRequired
+@token = {{postLoginHappyPath.response.body.token}}
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "title": "",
+  "author": "any-author-{{$timestamp}}",
+  "url": "https://example.com",
+  "likes": 8
+}
+
+###
+
+# @name postBlogErrorUrlIsRequired
+@token = {{postLoginHappyPath.response.body.token}}
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "title": "any-title-{{$timestamp}}",
+  "author": "any-author-{{$timestamp}}",
+  "url": "",
+  "likes": 8
+}
+###
+
+# @name getAllBlogsHappyPath
+GET http://localhost:3003/api/blogs
+###
+
+# @name getAllUsersHappyPath
+GET http://localhost:3003/api/users
+###
+
+# @name getOneBlogHappyPath
+GET http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}
+###
+
+# @name getOneBlogWrongId
+GET http://localhost:3003/api/blogs/hihihihi
+###
+
+# @name putBlogHappyPath
+PUT http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}
+Content-Type: application/json
+
+{
+  "title": "{{postBlogHappyPath.response.body.title}}",
+  "author": "{{postBlogHappyPath.response.body.author}}",
+  "url": "https://example.com",
+  "likes": 100,
+  "id": "5f481ed68ee4247fa15ef0ef",
+  "user": "5f48d38b6f2541067f2b3163"
+}
+###
+
+# @name deleteBlogHappyPath
+@token = {{postLoginHappyPath.response.body.token}}
+DELETE http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}
+Authorization: bearer {{token}}
+
+###
