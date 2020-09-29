@@ -3,15 +3,13 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import BlogForm from './components/BlogForm'
-import NotificationError from './components/NotificationError'
-import NotificationSuccess from './components/NotificationSuccess'
+import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import './index.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [successMessage, setSuccessMessage] = useState(null)
+  const [notification, setNotification] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -33,17 +31,24 @@ const App = () => {
     }
   }, [])
 
+  const notifyWith = (message, type = 'success') => {
+    setNotification({
+      message, type
+    })
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000)
+  }
+
   const addBlog = async (blogObject) => {
     blogFormRef.current.toggleVisibility()
     try {
       const returnedBlog = await blogService.create(blogObject)
       setBlogs(blogs.concat(returnedBlog))
-      setSuccessMessage(`new blog added: ${blogObject.title} by ${blogObject.author}`)
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
+      notifyWith(`a new blog '${returnedBlog.title}' by ${returnedBlog.author} added!`)
     }
     catch (error) {
+      notifyWith(`something went wrong: ${error}`, 'error')
       console.log(error)
     }
   }
@@ -54,16 +59,10 @@ const App = () => {
     try {
       const returnedBlog = await blogService.update(id, changedBlog)
       setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-      setSuccessMessage('blog updated')
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
+      notifyWith(`blog updated`)
     }
     catch (error) {
-      setErrorMessage(`something went wrong: ${error}`)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      notifyWith(`something went wrong: ${error}`, 'error')
       console.log(error)
     }
   }
@@ -75,16 +74,10 @@ const App = () => {
       try {
         await blogService.remove(id)
         setBlogs(blogs.filter(it => it.id !== id))
-        setSuccessMessage(`${blog.title} has been deleted`)
-        setTimeout(() => {
-          setSuccessMessage(null)
-        }, 5000)
+        notifyWith(`${blog.title} has been deleted`)
       }
       catch (error) {
-        setErrorMessage(`something went wrong: ${error}`)
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
+        notifyWith(`something went wrong: ${error}`, 'error')
         const serverBlogs = await blogService.getAll()
         setBlogs(serverBlogs)
       }
@@ -105,11 +98,9 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      notifyWith(`${user.name} welcome back!`)
     } catch (exception) {
-      setErrorMessage('wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      notifyWith('wrong username/password', 'error')
       setUsername('')
       setPassword('')
     }
@@ -159,8 +150,7 @@ const App = () => {
     <div>
       <h1>Blogs App</h1>
 
-      <NotificationError message={errorMessage} />
-      <NotificationSuccess message={successMessage} />
+      <Notification notification={notification} />
 
       {user === null ?
         loginForm() :
