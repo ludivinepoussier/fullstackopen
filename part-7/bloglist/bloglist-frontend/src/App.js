@@ -35,8 +35,8 @@ const App = () => {
     }
   }, [])
 
-  const notifyWith = (message, type='success') => {
-    dispatch(setNotification(message, type, 5))
+  const notifyWith = (message, success) => {
+    dispatch(setNotification(message, success, 5))
   }
 
   const addBlog = async (blogObject) => {
@@ -44,10 +44,10 @@ const App = () => {
     try {
       const returnedBlog = await blogService.create(blogObject)
       setBlogs(blogs.concat(returnedBlog))
-      notifyWith(`a new blog '${returnedBlog.title}' by ${returnedBlog.author} added!`)
+      notifyWith(`a new blog '${returnedBlog.title}' by ${returnedBlog.author} added!`, 'success')
     }
     catch (error) {
-      notifyWith(`something went wrong: ${error}`, 'error')
+      notifyWith(`something went wrong: ${error}`)
       console.log(error)
     }
   }
@@ -58,10 +58,10 @@ const App = () => {
     try {
       const returnedBlog = await blogService.update(id, changedBlog)
       setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-      notifyWith(`blog updated`)
+      notifyWith(`blog updated`, 'success')
     }
     catch (error) {
-      notifyWith(`something went wrong: ${error}`, 'error')
+      notifyWith(`something went wrong: ${error}`)
       console.log(error)
     }
   }
@@ -73,10 +73,10 @@ const App = () => {
       try {
         await blogService.remove(id)
         setBlogs(blogs.filter(it => it.id !== id))
-        notifyWith(`${blog.title} has been deleted`)
+        notifyWith(`${blog.title} has been deleted`, 'success')
       }
       catch (error) {
-        notifyWith(`something went wrong: ${error}`, 'error')
+        notifyWith(`something went wrong: ${error}`)
         const serverBlogs = await blogService.getAll()
         setBlogs(serverBlogs)
       }
@@ -97,9 +97,9 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      notifyWith(`${user.name} welcome back!`)
+      notifyWith(`${user.name} welcome back!`, 'success')
     } catch (exception) {
-      notifyWith('wrong username/password', 'error')
+      notifyWith('wrong username/password')
       setUsername('')
       setPassword('')
     }

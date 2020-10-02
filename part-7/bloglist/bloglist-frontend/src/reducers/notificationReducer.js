@@ -1,6 +1,6 @@
 const initialState = {
   message: '',
-  type: 'success',
+  success: '',
   pendingTimeoutHandler: null
 }
 
@@ -21,13 +21,13 @@ const notificationReducer = (state = initialState, action) => {
   }
 }
 
-export const setNotification = (message, type, time=5) => {
+export const setNotification = (message, success, time=5) => {
 
   return async (dispatch) => {
 
     const result = {
       message,
-      type,
+      success,
       pendingTimeoutHandler: setTimeout(() => { dispatch(removeNotification()) }, time * 1000),
     }
 
