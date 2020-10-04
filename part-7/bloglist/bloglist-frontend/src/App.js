@@ -6,7 +6,7 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import './index.css'
 
-import { initializeBlogs, createBlog } from './reducers/blogReducer'
+import { initializeBlogs, createBlog, likeBlog } from './reducers/blogReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import BlogList from './components/BlogList'
@@ -36,25 +36,15 @@ const App = () => {
     dispatch(setNotification(message, success, 5))
   }
 
-  const addBlog = (blogObject) => {
+  const addBlog = blogObject => {
     blogFormRef.current.toggleVisibility()
-      dispatch(createBlog(blogObject))
-      notifyWith(`a new blog '${blogObject.title}' by ${blogObject.author} added!`, 'success')
+    dispatch(createBlog(blogObject))
+    notifyWith(`a new blog '${blogObject.title}' by ${blogObject.author} added!`, 'success')
   }
 
-  const addLikes = async (id) => {
-    const blog = blogs.find(it => it.id === id)
-    const changedBlog = { ...blog, likes: blog.likes + 1 }
-    try {
-      const returnedBlog = await blogService.update(id, changedBlog)
-      // setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-      alert('not implemented')
-      notifyWith(`blog updated`, 'success')
-    }
-    catch (error) {
-      notifyWith(`something went wrong: ${error}`)
-      console.log(error)
-    }
+  const addLikes = blogObject => {
+    dispatch(likeBlog(blogObject))
+    notifyWith(`blog updated`, 'success')
   }
 
   const removeBlog = async id => {

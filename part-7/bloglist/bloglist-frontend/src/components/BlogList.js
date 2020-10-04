@@ -13,7 +13,7 @@ const BlogList = ({ blogs, removeBlog, addLikes }) => {
               className='blogList'
               key={blog.id}
               blog={blog}
-              addLikes={() => addLikes(blog.id)}
+              addLikes={() => addLikes(blog)}
               removeBlog={() => removeBlog(blog.id)}
             />
           )

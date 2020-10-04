@@ -12,14 +12,9 @@ const blogReducer = (state = [], action) => {
       return action.data
 
     case 'LIKE':
-      const id = action.data.id
-      const likedBlog = state.find(it => it.id === id)
-      const updatedBlog = {
-        ...likedBlog,
-        likes: likedBlog.likes + 1
-      }
+      const updatedBlog = action.data
       return state.map(blog =>
-        blog.id !== id ? blog : updatedBlog
+        blog.id !== updatedBlog.id ? blog : updatedBlog
       )
 
     default:
@@ -49,9 +44,9 @@ export const initializeBlogs = () => {
   }
 }
 
-export const likeBlog = (likedBlog) => {
+export const likeBlog = (blogObject) => {
   return async (dispatch) => {
-    const blog = { ...likedBlog, likes: likedBlog.likes + 1 }
+    const blog = { ...blogObject, likes: blogObject.likes + 1 }
     const updatedBlog = await blogService.update(blog)
     dispatch({
       type: "LIKE",
