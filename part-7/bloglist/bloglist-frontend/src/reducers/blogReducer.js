@@ -17,10 +17,24 @@ const blogReducer = (state = [], action) => {
         blog.id !== updatedBlog.id ? blog : updatedBlog
       )
 
+    case 'REMOVE':
+      const removedBlog = action.data
+      return state.filter(blog => blog.id !== removedBlog.id)
+
     default:
       if (!action.type.startsWith('@@') && !action.type.startsWith('SET_NOTIFICATION') && !action.type.startsWith('REMOVE_NOTIFICATION')) 
       throw new Error(`Unnexpected action type: ${action.type}`)
       return state
+  }
+}
+
+export const deleteBlog = blogObject => {
+  return async (dispatch) => {
+    await blogService.remove(blogObject)
+    dispatch({
+      type: "REMOVE",
+      data: blogObject
+    })
   }
 }
 

@@ -6,7 +6,7 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import './index.css'
 
-import { initializeBlogs, createBlog, likeBlog } from './reducers/blogReducer'
+import { initializeBlogs, createBlog, likeBlog, deleteBlog } from './reducers/blogReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import BlogList from './components/BlogList'
@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initializeBlogs())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -47,24 +47,10 @@ const App = () => {
     notifyWith(`blog updated`, 'success')
   }
 
-  const removeBlog = async id => {
-    const blog = blogs.find(it => it.id === id)
-
-    if (window.confirm(`Delete ${blog.title} ?`)) {
-      try {
-        await blogService.remove(id)
-        // setBlogs(blogs.filter(it => it.id !== id))
-        alert('not implemented')
-
-        notifyWith(`${blog.title} has been deleted`, 'success')
-      }
-      catch (error) {
-        notifyWith(`something went wrong: ${error}`)
-        const serverBlogs = await blogService.getAll()
-        // setBlogs(serverBlogs)
-        alert('not implemented')
-
-      }
+  const removeBlog = blogObject => {
+    if (window.confirm(`Delete ${blogObject.title} ?`)) {
+      dispatch(deleteBlog(blogObject))
+      notifyWith(`${blogObject.title} has been deleted`, 'success')
     }
   }
 
