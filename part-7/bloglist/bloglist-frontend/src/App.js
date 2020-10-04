@@ -6,24 +6,21 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import './index.css'
 
-import { useDispatch } from 'react-redux'
+import { initializeBlogs, createBlog } from './reducers/blogReducer'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import BlogList from './components/BlogList'
 
 const App = () => {
   const dispatch = useDispatch()
 
-  const [blogs, setBlogs] = useState([])
+  const blogs = useSelector(state => state.blogs)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    async function fetchData() {
-      const initialBlogs = await blogService.getAll()
-      setBlogs(initialBlogs)
-    }
-    fetchData()
+    dispatch(initializeBlogs())
   }, [])
 
   useEffect(() => {
@@ -39,17 +36,10 @@ const App = () => {
     dispatch(setNotification(message, success, 5))
   }
 
-  const addBlog = async (blogObject) => {
+  const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
-    try {
-      const returnedBlog = await blogService.create(blogObject)
-      setBlogs(blogs.concat(returnedBlog))
-      notifyWith(`a new blog '${returnedBlog.title}' by ${returnedBlog.author} added!`, 'success')
-    }
-    catch (error) {
-      notifyWith(`something went wrong: ${error}`)
-      console.log(error)
-    }
+      dispatch(createBlog(blogObject))
+      notifyWith(`a new blog '${blogObject.title}' by ${blogObject.author} added!`, 'success')
   }
 
   const addLikes = async (id) => {
@@ -57,7 +47,8 @@ const App = () => {
     const changedBlog = { ...blog, likes: blog.likes + 1 }
     try {
       const returnedBlog = await blogService.update(id, changedBlog)
-      setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+      // setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+      alert('not implemented')
       notifyWith(`blog updated`, 'success')
     }
     catch (error) {
@@ -72,13 +63,17 @@ const App = () => {
     if (window.confirm(`Delete ${blog.title} ?`)) {
       try {
         await blogService.remove(id)
-        setBlogs(blogs.filter(it => it.id !== id))
+        // setBlogs(blogs.filter(it => it.id !== id))
+        alert('not implemented')
+
         notifyWith(`${blog.title} has been deleted`, 'success')
       }
       catch (error) {
         notifyWith(`something went wrong: ${error}`)
         const serverBlogs = await blogService.getAll()
-        setBlogs(serverBlogs)
+        // setBlogs(serverBlogs)
+        alert('not implemented')
+
       }
     }
   }
