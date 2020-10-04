@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect  } from 'react'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
-import Togglable from './components/Togglable'
 import './index.css'
 
-import { initializeBlogs, createBlog, likeBlog, deleteBlog } from './reducers/blogReducer'
-import { useDispatch, useSelector } from 'react-redux'
+import { initializeBlogs, } from './reducers/blogReducer'
+import { useDispatch } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import BlogList from './components/BlogList'
 
 const App = () => {
   const dispatch = useDispatch()
 
-  const blogs = useSelector(state => state.blogs)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -34,24 +31,6 @@ const App = () => {
 
   const notifyWith = (message, success) => {
     dispatch(setNotification(message, success, 5))
-  }
-
-  const addBlog = blogObject => {
-    blogFormRef.current.toggleVisibility()
-    dispatch(createBlog(blogObject))
-    notifyWith(`a new blog '${blogObject.title}' by ${blogObject.author} added!`, 'success')
-  }
-
-  const addLikes = blogObject => {
-    dispatch(likeBlog(blogObject))
-    notifyWith(`blog updated`, 'success')
-  }
-
-  const removeBlog = blogObject => {
-    if (window.confirm(`Delete ${blogObject.title} ?`)) {
-      dispatch(deleteBlog(blogObject))
-      notifyWith(`${blogObject.title} has been deleted`, 'success')
-    }
   }
 
   const handleLogin = async (event) => {
@@ -108,14 +87,6 @@ const App = () => {
     </form>
   )
 
-  const blogFormRef = useRef()
-
-  const blogForm = () => (
-    <Togglable buttonLabel='new blog' ref={blogFormRef}>
-      <BlogForm createBlog={addBlog} />
-    </Togglable>
-  )
-
   return (
     <div>
       <h1>Blogs App</h1>
@@ -130,10 +101,9 @@ const App = () => {
             <button onClick={logout}>
               logout
             </button>
-            {blogForm()}
           </div>
           <h2>List of blogs</h2>
-          <BlogList blogs={blogs} removeBlog={removeBlog} addLikes={addLikes}/>
+          <BlogList />
         </div>
       }
 
