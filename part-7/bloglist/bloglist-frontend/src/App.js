@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import BlogForm from './components/BlogForm'
@@ -9,6 +8,7 @@ import './index.css'
 
 import { useDispatch } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
+import BlogList from './components/BlogList'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -162,9 +162,7 @@ const App = () => {
             {blogForm()}
           </div>
           <h2>List of blogs</h2>
-          {blogs
-            .sort((a, b) => b.likes - a.likes)
-            .map(blog => <Blog className='blogList' key={blog.id} blog={blog} changeBlog={() => addLikes(blog.id)} removeBlog={() => removeBlog(blog.id)}/> )}
+          <BlogList blogs={blogs} removeBlog={removeBlog} addLikes={addLikes}/>
         </div>
       }
 
