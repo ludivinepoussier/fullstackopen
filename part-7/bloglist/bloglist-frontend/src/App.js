@@ -5,8 +5,10 @@ import Notification from './components/Notification'
 import './index.css'
 
 import { initializeBlogs, } from './reducers/blogReducer'
-import { useDispatch } from 'react-redux'
+import { initializeUsers } from './reducers/userReducer'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
+import { logout, login } from './reducers/loginReducer'
 import BlogList from './components/BlogList'
 
 const App = () => {
@@ -14,17 +16,18 @@ const App = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
 
   useEffect(() => {
     dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   }, [dispatch])
+
+  const user = useSelector((state) => state.login)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
       blogService.setToken(user.token)
     }
   }, [])
@@ -44,7 +47,7 @@ const App = () => {
         'loggedBlogappUser', JSON.stringify(user)
       )
       blogService.setToken(user.token)
-      setUser(user)
+      dispatch(login(username, password))
       setUsername('')
       setPassword('')
       notifyWith(`${user.name} welcome back!`, 'success')
@@ -55,9 +58,9 @@ const App = () => {
     }
   }
 
-  const logout = () => {
+  const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
-    setUser(null)
+    dispatch(logout())
   }
 
   const loginForm = () => (
@@ -98,7 +101,7 @@ const App = () => {
         <div>
           <div>
             <p>{user.name} logged in</p>
-            <button onClick={logout}>
+            <button onClick={handleLogout}>
               logout
             </button>
           </div>
