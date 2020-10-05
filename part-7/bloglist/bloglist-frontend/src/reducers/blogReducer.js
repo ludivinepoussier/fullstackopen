@@ -22,8 +22,6 @@ const blogReducer = (state = [], action) => {
       return state.filter(blog => blog.id !== removedBlog.id)
 
     default:
-      if (!action.type.startsWith('@@') && !action.type.startsWith('SET_NOTIFICATION') && !action.type.startsWith('REMOVE_NOTIFICATION')) 
-      throw new Error(`Unnexpected action type: ${action.type}`)
       return state
   }
 }
