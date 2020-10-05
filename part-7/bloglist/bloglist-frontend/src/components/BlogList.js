@@ -10,6 +10,8 @@ const BlogList = () => {
 
   const dispatch = useDispatch()
 
+  const user = useSelector((state) => state.login)
+
   const blogs = useSelector(state => state.blogs)
 
   const notifyWith = (message, success) => {
@@ -43,25 +45,27 @@ const BlogList = () => {
   )
 
   return (
-    <>
-      <div>{blogForm()}</div>
+      user &&
+      <>
+        <div>{blogForm()}</div>
+        <h2>List of blogs</h2>
 
-      <div>
-        {
-        blogs
-          .sort((a, b) => b.likes - a.likes)
-          .map(blog =>
-            <Blog
-              className='blogList'
-              key={blog.id}
-              blog={blog}
-              addLikes={() => addLikes(blog)}
-              removeBlog={() => removeBlog(blog)}
-            />
-          )
-        }
-      </div>
-    </>
+        <div>
+          {
+          blogs
+            .sort((a, b) => b.likes - a.likes)
+            .map(blog =>
+              <Blog
+                className='blogList'
+                key={blog.id}
+                blog={blog}
+                addLikes={() => addLikes(blog)}
+                removeBlog={() => removeBlog(blog)}
+              />
+            )
+          }
+        </div>
+      </>
   )
 }
 
