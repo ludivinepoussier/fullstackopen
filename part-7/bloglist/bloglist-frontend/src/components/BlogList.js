@@ -44,7 +44,7 @@ const BlogList = () => {
 
   return (
     <>
-      <p>{blogForm()}</p>
+      <div>{blogForm()}</div>
 
       <div>
         {
