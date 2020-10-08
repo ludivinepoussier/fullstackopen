@@ -1,8 +1,12 @@
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import Blog from './Blog'
 import Togglable from './Togglable'
 import BlogForm from './BlogForm'
+import Notification from './Notification'
+import Login from './Login'
+
 import { likeBlog, deleteBlog, createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
@@ -45,8 +49,16 @@ const BlogList = () => {
   )
 
   return (
+    
       user &&
       <>
+        <div>
+          <h1>Blogs App</h1>
+
+          <Notification />
+
+          <Login />
+        </div>
         <div>{blogForm()}</div>
         <h2>List of blogs</h2>
 

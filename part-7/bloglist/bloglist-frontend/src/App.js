@@ -1,13 +1,20 @@
 import React, { useEffect  } from 'react'
+
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link
+} from 'react-router-dom'
+
 import blogService from './services/blogs'
-import Notification from './components/Notification'
-import './index.css'
 
 import { initializeBlogs, } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { useDispatch } from 'react-redux'
-import Login from './components/Login'
+
 import BlogList from './components/BlogList'
+import Users from './components/Users'
+
+import './index.css'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -25,16 +32,34 @@ const App = () => {
     }
   }, [])
 
+  const padding = {
+    padding: 5
+  }
+
   return (
-    <div>
-      <h1>Blogs App</h1>
+    <Router>
 
-      <Notification />
+      <div>
+        <Link style={padding} to="/">blogs</Link>
+        <Link style={padding} to="/users">users</Link>
+      </div>
 
-      <Login />
+      <Switch>
+        <Route path="/blogs/:id">
+          {/* <Blog /> */}
+        </Route>
+        <Route path="/users/:id">
+          {/* <User /> */}
+        </Route>
+        <Route path="/users">
+          <Users />
+        </Route>
+        <Route path="/">
+          <BlogList />
+        </Route>
+      </Switch>
 
-      <BlogList />
-    </div>
+    </Router>
   )
 }
 
