@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import {
   BrowserRouter as Router,
@@ -6,20 +7,21 @@ import {
 } from 'react-router-dom'
 
 import Notification from './Notification'
-import Login from './Login'
 
 const Users = ({users}) => {
+
+  const userLoggedIn = useSelector((state) => state.login)
 
   const padding = {
     paddingRight: 20
   }
 
   return (
-    <div>
+    userLoggedIn &&
+    <>
       <div>
-        <h1>Blogs App</h1>
         <Notification />
-        <Login />
+        <h1>Blogs App</h1>
       </div>
       <h2>Users</h2>
       <table>
@@ -46,7 +48,7 @@ const Users = ({users}) => {
           }
         </tbody>
       </table>
-    </div>
+    </>
   )
 }
 

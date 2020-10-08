@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+
 import blogService from '../services/blogs'
 import loginService from '../services/login'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { logout, login } from '../reducers/loginReducer'
@@ -75,12 +77,7 @@ const Login = () => {
     <>
       {user === null ?
         loginForm() :
-        <div>
-          <p>{user.name} logged in</p>
-          <button onClick={handleLogout}>
-            logout
-          </button>
-        </div>
+        <>{user.name} logged in <button onClick={handleLogout}>logout</button></>
       }
     </>
   )

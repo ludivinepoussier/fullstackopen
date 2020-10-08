@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom'
 
 import Notification from './Notification'
-import Login from './Login'
 
 const User = ({users}) => {
 
@@ -22,9 +21,8 @@ const User = ({users}) => {
   return (
     <>
       <div>
-        <h1>Blogs App</h1>
         <Notification />
-        <Login />
+        <h1>Blogs App</h1>
       </div>
       <h2>{user.name}</h2>
       <h3>added blogs</h3>

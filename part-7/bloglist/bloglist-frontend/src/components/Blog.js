@@ -11,7 +11,6 @@ import {
 } from 'react-router-dom'
 
 import Notification from './Notification'
-import Login from './Login'
 
 const Blog = ({ blogs }) => {
 
@@ -48,9 +47,8 @@ const Blog = ({ blogs }) => {
   return (
     <>
       <div>
-          <h1>Blogs App</h1>
-          <Notification />
-          <Login />
+        <Notification />
+        <h1>Blogs App</h1>
       </div>
       <div>
         <h2>{`${blog.title}`}</h2>

@@ -9,7 +9,6 @@ import {
 import Togglable from './Togglable'
 import BlogForm from './BlogForm'
 import Notification from './Notification'
-import Login from './Login'
 
 import { createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
@@ -18,7 +17,7 @@ const BlogList = ({ blogs }) => {
 
   const dispatch = useDispatch()
 
-  const user = useSelector((state) => state.login)
+  const userLoggedIn = useSelector((state) => state.login)
 
   const notifyWith = (message, success) => {
     dispatch(setNotification(message, success, 5))
@@ -40,12 +39,11 @@ const BlogList = ({ blogs }) => {
 
   return (
     
-      user &&
+      userLoggedIn &&
       <>
         <div>
+        <Notification />
           <h1>Blogs App</h1>
-          <Notification />
-          <Login />
         </div>
         <div>{blogForm()}</div>
         <h2>List of blogs</h2>

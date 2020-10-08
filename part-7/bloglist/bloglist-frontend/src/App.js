@@ -15,6 +15,7 @@ import BlogList from './components/BlogList'
 import Users from './components/Users'
 import User from './components/User'
 import Blog from './components/Blog'
+import Login from './components/Login'
 
 import './index.css'
 
@@ -41,12 +42,18 @@ const App = () => {
     padding: 5
   }
 
+  const navbarStyle = {
+    marginBottom: 10,
+    backgroundColor: 'lightgray'
+  }
+
   return (
     <Router>
 
-      <div>
+      <div style={navbarStyle}>
         <Link style={padding} to="/">blogs</Link>
         <Link style={padding} to="/users">users</Link>
+        <Login style={padding} />
       </div>
 
       <Switch>
