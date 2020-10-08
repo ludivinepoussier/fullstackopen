@@ -35,6 +35,7 @@ const App = () => {
   }, [])
 
   const users = useSelector((state) => state.users)
+  const blogs = useSelector(state => state.blogs)
 
   const padding = {
     padding: 5
@@ -50,7 +51,7 @@ const App = () => {
 
       <Switch>
         <Route path="/blogs/:id">
-          <Blog />
+          <Blog blogs={blogs} />
         </Route>
         <Route path="/users/:id">
           <User users={users} />
@@ -59,7 +60,7 @@ const App = () => {
           <Users users={users} />
         </Route>
         <Route path="/">
-          <BlogList />
+          <BlogList blogs={blogs} />
         </Route>
       </Switch>
 

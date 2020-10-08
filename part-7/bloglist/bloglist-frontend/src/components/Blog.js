@@ -1,46 +1,72 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-const Blog = ({ blog, addLikes, removeBlog }) => {
-  const [showDetails, setShowDetails] = useState(false)
+import { useDispatch } from 'react-redux'
 
-  const notShowingDetails = { display: showDetails ? 'none' : '' }
-  const showingDetails = { display: showDetails ? '' : 'none' }
+import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
+
+import {
+  BrowserRouter as Router,
+  useRouteMatch, Link
+} from 'react-router-dom'
+
+import Notification from './Notification'
+import Login from './Login'
+
+const Blog = ({ blogs }) => {
+
+  const dispatch = useDispatch()
 
   const loggedUser = JSON.parse(window.localStorage.getItem('loggedBlogappUser'))
 
-  const toggleDetails = () => {
-    setShowDetails(!showDetails)
+  const notifyWith = (message, success) => {
+    dispatch(setNotification(message, success, 5))
   }
 
-  const blogStyle = {
-    padding: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
+  const addLikes = blogObject => {
+    dispatch(likeBlog(blogObject))
+    notifyWith(`blog updated`, 'success')
   }
 
-  const paraStyle = {
-    marginTop: 0,
-    marginBottom: 0
+  const removeBlog = blogObject => {
+    if (window.confirm(`Delete ${blogObject.title} ?`)) {
+      dispatch(deleteBlog(blogObject))
+      notifyWith(`${blogObject.title} has been deleted`, 'success')
+    }
+  }
+
+  const matchBlog = useRouteMatch('/blogs/:id')
+  const blog = matchBlog
+    ? blogs.find((blog) => blog.id === matchBlog.params.id)
+    : null
+
+  if (!blog) {
+    console.log(`BLOG IS ${blog}`)
+    return null
   }
 
   return (
-    <div style={blogStyle}>
-      <div style={notShowingDetails} className='notShowingDetails'>
-        {blog.title} by {blog.author} <button onClick={toggleDetails}>show</button>
+    <>
+      <div>
+          <h1>Blogs App</h1>
+          <Notification />
+          <Login />
       </div>
-      <div style={showingDetails} className='showingDetails'>
-        <p style={paraStyle}>{`${blog.title} by ${blog.author}`} <button onClick={toggleDetails}>hide</button> </p>
-        <p style={paraStyle}>{`url: ${blog.url}`}</p>
-        <p style={paraStyle}>{`likes: ${blog.likes}`} <button id='like-button' onClick={addLikes}>like</button> </p>
-        <p style={paraStyle}>
+      <div>
+        <h2>{`${blog.title}`}</h2>
+        <p><a href={blog.url}>{blog.url}</a></p>
+        <p>{`${blog.likes} likes`} <button id='like-button' onClick={() => addLikes(blog)}>like</button> </p>
+        <p>added by {blog.author}</p>
+        <p>
           {
             loggedUser.username === blog.user.username &&
-        <button type='button' value={blog.id} onClick={removeBlog}>remove</button>
+        <Link to="/">
+          <button type='button' value={blog.id} onClick={() => removeBlog(blog)}>remove</button>
+        </Link>
           }
         </p>
       </div>
-    </div>
+    </>
   )}
 
 export default Blog

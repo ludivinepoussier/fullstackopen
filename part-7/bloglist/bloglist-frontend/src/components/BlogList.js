@@ -1,37 +1,27 @@
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Blog from './Blog'
+import {
+  BrowserRouter as Router,
+  Link
+} from 'react-router-dom'
+
 import Togglable from './Togglable'
 import BlogForm from './BlogForm'
 import Notification from './Notification'
 import Login from './Login'
 
-import { likeBlog, deleteBlog, createBlog } from '../reducers/blogReducer'
+import { createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
-const BlogList = () => {
+const BlogList = ({ blogs }) => {
 
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.login)
 
-  const blogs = useSelector(state => state.blogs)
-
   const notifyWith = (message, success) => {
     dispatch(setNotification(message, success, 5))
-  }
-
-  const addLikes = blogObject => {
-    dispatch(likeBlog(blogObject))
-    notifyWith(`blog updated`, 'success')
-  }
-
-  const removeBlog = blogObject => {
-    if (window.confirm(`Delete ${blogObject.title} ?`)) {
-      dispatch(deleteBlog(blogObject))
-      notifyWith(`${blogObject.title} has been deleted`, 'success')
-    }
   }
 
   const addBlog = blogObject => {
@@ -54,26 +44,19 @@ const BlogList = () => {
       <>
         <div>
           <h1>Blogs App</h1>
-
           <Notification />
-
           <Login />
         </div>
         <div>{blogForm()}</div>
         <h2>List of blogs</h2>
-
         <div>
           {
           blogs
             .sort((a, b) => b.likes - a.likes)
             .map(blog =>
-              <Blog
-                className='blogList'
-                key={blog.id}
-                blog={blog}
-                addLikes={() => addLikes(blog)}
-                removeBlog={() => removeBlog(blog)}
-              />
+              <Link to={`/blogs/${blog.id}`} key={blog.title}>
+              <p key={blog.id}> {blog.title} by {blog.author} </p>
+              </Link>
             )
           }
         </div>
