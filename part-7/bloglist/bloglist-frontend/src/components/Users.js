@@ -1,15 +1,15 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 
 import {
-  BrowserRouter as Link
+  BrowserRouter as Router,
+  Link
 } from 'react-router-dom'
 
 import Notification from './Notification'
 import Login from './Login'
 
-const Users = () => {
-  const users = useSelector((state) => state.users)
+const Users = ({users}) => {
+
   const padding = {
     paddingRight: 20
   }
@@ -35,7 +35,7 @@ const Users = () => {
               <tr key={user.id}>
                 <td style={padding}>
                   <Link to={`/users/${user.id}`}>
-                    {user.username}
+                    {user.name}
                   </Link>
                 </td>
                 <td style={padding}>

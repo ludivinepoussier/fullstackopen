@@ -9,10 +9,12 @@ import blogService from './services/blogs'
 
 import { initializeBlogs, } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import BlogList from './components/BlogList'
 import Users from './components/Users'
+import User from './components/User'
+import Blog from './components/Blog'
 
 import './index.css'
 
@@ -32,6 +34,8 @@ const App = () => {
     }
   }, [])
 
+  const users = useSelector((state) => state.users)
+
   const padding = {
     padding: 5
   }
@@ -46,13 +50,13 @@ const App = () => {
 
       <Switch>
         <Route path="/blogs/:id">
-          {/* <Blog /> */}
+          <Blog />
         </Route>
         <Route path="/users/:id">
-          {/* <User /> */}
+          <User users={users} />
         </Route>
         <Route path="/users">
-          <Users />
+          <Users users={users} />
         </Route>
         <Route path="/">
           <BlogList />
