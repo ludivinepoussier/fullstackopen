@@ -95,14 +95,17 @@ GET http://localhost:3003/api/blogs/hihihihi
 ###
 
 # @name putBlogHappyPath
+@token = {{postLoginHappyPath.response.body.token}}
 PUT http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}
 Content-Type: application/json
+Authorization: bearer {{token}}
 
 {
   "title": "{{postBlogHappyPath.response.body.title}}",
   "author": "{{postBlogHappyPath.response.body.author}}",
   "url": "https://example.com",
   "likes": 100,
+  "comments": ["amazing-{{$timestamp}}"],
   "id": "5f481ed68ee4247fa15ef0ef",
   "user": "5f48d38b6f2541067f2b3163"
 }

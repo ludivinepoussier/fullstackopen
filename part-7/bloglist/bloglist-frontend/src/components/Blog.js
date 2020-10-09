@@ -55,6 +55,15 @@ const Blog = ({ blogs }) => {
         <p><a href={blog.url}>{blog.url}</a></p>
         <p>{`${blog.likes} likes`} <button id='like-button' onClick={() => addLikes(blog)}>like</button> </p>
         <p>added by {blog.author}</p>
+        <h3>comments</h3>
+        <ul>
+          {
+            blog.comments
+              .map((comment, index) =>
+                  <li key={index}>{comment}</li>
+              )
+          }
+        </ul>
         <p>
           {
             loggedUser.username === blog.user.username &&
