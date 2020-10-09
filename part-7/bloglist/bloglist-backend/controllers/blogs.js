@@ -3,23 +3,22 @@ const jwt = require('jsonwebtoken')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
-blogsRouter.get('/', async (request, response) => {
+// routes to /api/blogs
+blogsRouter.get('/', handlBlogeGetAll)
+blogsRouter.post('/', handleBlogPost)
+blogsRouter.get('/:id', handlBlogeGetOne)
+blogsRouter.put('/:id', handleBlogPut)
+blogsRouter.delete('/:id', handleBlogDelete)
+
+
+async function handlBlogeGetAll(request, response) {
   const blogs = await Blog
     .find({})
     .populate('user', { username: 1, name: 1, id: 1 })
   response.json(blogs)
-})
+}
 
-blogsRouter.get('/:id', async (request, response) => {
-  const blog = await Blog.findById(request.params.id)
-  if (blog) {
-    response.json(blog)
-  } else {
-    response.status(404).end()
-  }
-})
-
-blogsRouter.post('/', async (request, response) => {
+async function handleBlogPost(request, response) {
   const blog = new Blog(request.body)
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
@@ -41,9 +40,18 @@ blogsRouter.post('/', async (request, response) => {
   await user.save()
 
   response.status(201).json(savedBlog)
-})
+}
 
-blogsRouter.put('/:id', async (request, response) => {
+async function handlBlogeGetOne(request, response) {
+  const blog = await Blog.findById(request.params.id)
+  if (blog) {
+    response.json(blog)
+  } else {
+    response.status(404).end()
+  }
+}
+
+async function handleBlogPut(request, response) {
   const blog = request.body
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
@@ -56,9 +64,9 @@ blogsRouter.put('/:id', async (request, response) => {
     .findByIdAndUpdate(request.params.id, blog, { new: true })
     .populate('user', { username: 1, name: 1, id: 1 })
   response.json(updatedBlog.toJSON())
-})
+}
 
-blogsRouter.delete('/:id', async (request, response) => {
+async function handleBlogDelete(request, response) {
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
   if (!request.token || !decodedToken.id) {
@@ -75,6 +83,6 @@ blogsRouter.delete('/:id', async (request, response) => {
   user.blogs = user.blogs.filter(b => b.id.toString() !== request.params.id.toString())
   await user.save()
   response.status(204).end()
-})
+}
 
 module.exports = blogsRouter
