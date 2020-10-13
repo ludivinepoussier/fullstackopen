@@ -16,7 +16,7 @@ import Users from './components/Users'
 import User from './components/User'
 import Blog from './components/Blog'
 import Login from './components/Login'
-
+import styled from 'styled-components'
 import './index.css'
 
 const App = () => {
@@ -38,23 +38,14 @@ const App = () => {
   const users = useSelector((state) => state.users)
   const blogs = useSelector(state => state.blogs)
 
-  const padding = {
-    padding: 5
-  }
-
-  const navbarStyle = {
-    marginBottom: 10,
-    backgroundColor: 'lightgray'
-  }
-
   return (
     <Router>
 
-      <div style={navbarStyle}>
-        <Link style={padding} to="/">blogs</Link>
-        <Link style={padding} to="/users">users</Link>
-        <Login style={padding} />
-      </div>
+      <NavBar>
+        <Link to="/">blogs</Link>
+        <Link to="/users">users</Link>
+        <Login />
+      </NavBar>
 
       <Switch>
         <Route path="/blogs/:id">
@@ -74,5 +65,25 @@ const App = () => {
     </Router>
   )
 }
+
+const NavBar = styled.div`
+  marginBottom: 10;
+  background: rgb(140, 143, 150);
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: row;
+
+  & a {
+    margin: 3px 0;
+    color: rgb(249, 249, 249);
+    padding-right: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      text-shadow: 0 0 1px rgba(244, 249, 246, 0.92);
+    }
+  }
+`
 
 export default App

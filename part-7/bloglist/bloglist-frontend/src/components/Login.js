@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { logout, login } from '../reducers/loginReducer'
 
+import styled from 'styled-components'
+
 const Login = () => {
   const dispatch = useDispatch()
 
@@ -77,10 +79,13 @@ const Login = () => {
     <>
       {user === null ?
         loginForm() :
-        <>{user.name} logged in <button onClick={handleLogout}>logout</button></>
+        <Logged>{user.name} logged in <button onClick={handleLogout}>logout</button></Logged>
       }
     </>
   )
 }
 
+const Logged = styled.div`
+  color: rgb(6, 73, 135);
+`
 export default Login

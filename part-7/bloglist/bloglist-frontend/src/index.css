@@ -1,19 +1,45 @@
 .error {
-color: red;
-background: lightgrey;
-font-size: 20px;
-border-style: solid;
-border-radius: 5px;
-padding: 10px;
-margin-bottom: 10px;
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
 }  
 
 .success {
   color: green;
-background: lightgrey;
-font-size: 20px;
-border-style: solid;
-border-radius: 5px;
-padding: 10px;
-margin-bottom: 10px;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
+
+h1 {
+  color: blue;
+  text-align: center;
+}
+
+h2 {
+  color: rgb(6, 80, 150);
+  text-align: center;
+}
+
+h3 {
+  color: rgb(8, 27, 94);
+}
+
+button {
+  color: rgb(249, 249, 249);
+  background: rgb(33, 47, 79);
+  border: 1px solid gold;
+  margin: 3px 0;
+}
+
+button:hover {
+  text-shadow: 0 0 1px rgba(244, 249, 246, 0.92);
+}
+
