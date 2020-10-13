@@ -9,6 +9,7 @@ blogsRouter.post('/', handleBlogPost)
 blogsRouter.get('/:id', handlBlogeGetOne)
 blogsRouter.put('/:id', handleBlogPut)
 blogsRouter.delete('/:id', handleBlogDelete)
+blogsRouter.post('/:id/comments', handleBlogComment)
 
 
 async function handlBlogeGetAll(request, response) {
@@ -83,6 +84,22 @@ async function handleBlogDelete(request, response) {
   user.blogs = user.blogs.filter(b => b.id.toString() !== request.params.id.toString())
   await user.save()
   response.status(204).end()
+}
+
+async function handleBlogComment(request, response) {
+  const id = request.params.id
+
+  if (request.body.comments) {
+    const commentedBlog = await Blog
+      .findByIdAndUpdate(id, { ['$addToSet']: { comments: request.body.comments } },
+        { new: true }
+      )
+      .populate('user', { username: 1, name: 1, id: 1 })
+    response.json(commentedBlog)
+  }
+  else {
+    response.status(400).send({ error: 'Comment is missing' })
+  }
 }
 
 module.exports = blogsRouter

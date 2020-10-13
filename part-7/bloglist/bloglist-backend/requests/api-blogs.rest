@@ -111,6 +111,17 @@ Authorization: bearer {{token}}
 }
 ###
 
+# @name postBlogCommentHappyPath
+@token = {{postLoginHappyPath.response.body.token}}
+POST http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}/comments
+Content-Type: application/json
+Authorization: bearer {{token}}
+
+{
+  "comments": ["amazing-{{$timestamp}}"]
+}
+###
+
 # @name deleteBlogHappyPath
 @token = {{postLoginHappyPath.response.body.token}}
 DELETE http://localhost:3003/api/blogs/{{postBlogHappyPath.response.body.id}}
