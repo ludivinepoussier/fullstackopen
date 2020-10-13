@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { likeBlog, deleteBlog, createComment } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
 import {
@@ -27,6 +27,13 @@ const Blog = ({ blogs }) => {
     notifyWith(`blog updated`, 'success')
   }
 
+  const addComment = (e, id) => {
+    e.preventDefault()
+    const {comment} = e.target
+    dispatch(createComment(comment.value, id))
+    e.target.reset()
+    notifyWith(`comment added`, 'success')
+  }
   const removeBlog = blogObject => {
     if (window.confirm(`Delete ${blogObject.title} ?`)) {
       dispatch(deleteBlog(blogObject))
@@ -56,6 +63,13 @@ const Blog = ({ blogs }) => {
         <p>{`${blog.likes} likes`} <button id='like-button' onClick={() => addLikes(blog)}>like</button> </p>
         <p>added by {blog.author}</p>
         <h3>comments</h3>
+        <form onSubmit={(e) => addComment(e, blog.id)}>
+          <input 
+          name='comment'
+          type='text'
+          />
+          <button type='submit'>add comment</button>
+        </form>
         <ul>
           {
             blog.comments
