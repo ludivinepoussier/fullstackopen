@@ -9,11 +9,12 @@ const Notification = () => {
   }
 
   const style = {
-    borderStyle: 'solid',
-    borderRadius: 5,
     padding: 10,
+    margin: 20,
     color: notification.success ? 'green' : 'red',
-    background: 'lightgrey'
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 25,
   }
 
   return <div style={style}>
