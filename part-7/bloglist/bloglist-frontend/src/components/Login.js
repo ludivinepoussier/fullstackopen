@@ -49,30 +49,34 @@ const Login = () => {
   }
 
   const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        <h2>Log in to application</h2>
-        username &nbsp;
-        <input
-          id='username'
-          type='text'
-          value={username}
-          name='Username'
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password &nbsp;
-        <input
-          id='password'
-          type='password'
-          value={password}
-          name='Password'
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button id='login-button' type="submit">login</button>
-    </form>
+    <LoginForm>
+      <form onSubmit={handleLogin}>
+        <Border>
+          <h2>Log in to application</h2>
+          <p>
+            username &nbsp;
+            <input
+              id='username'
+              type='text'
+              value={username}
+              name='Username'
+              onChange={({ target }) => setUsername(target.value)}
+            />
+          </p>
+          <p>
+            password &nbsp;
+            <input
+              id='password'
+              type='password'
+              value={password}
+              name='Password'
+              onChange={({ target }) => setPassword(target.value)}
+            />
+          </p>
+          <button id='login-button' type="submit">login</button>
+        </Border>
+      </form>
+    </LoginForm>
   )
 
   return (
@@ -86,6 +90,24 @@ const Login = () => {
 }
 
 const Logged = styled.div`
-  color: rgb(6, 73, 135);
+  margin: .7rem;
+  color: black;
+`
+
+const LoginForm = styled.div`
+  width: 25%;
+  margin: 2rem auto;
+  border-radius: 5rem;
+  padding: 2rem;
+
+  & a {
+  color: black;
+  }
+`
+const Border = styled.div`
+  border: thick double black;
+  border-radius: 3rem;
+  padding: 2rem;
+  background: rgb(172, 245, 218);
 `
 export default Login

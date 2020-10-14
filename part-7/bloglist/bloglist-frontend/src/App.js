@@ -68,20 +68,23 @@ const App = () => {
 
 const NavBar = styled.div`
   marginBottom: 10;
-  background: rgb(140, 143, 150);
+  height: 3rem;
+  border: thick double black;
+  border-radius: 1rem;
   padding-left: 1rem;
   display: flex;
   flex-direction: row;
 
   & a {
-    margin: 3px 0;
-    color: rgb(249, 249, 249);
-    padding-right: 1rem;
+    margin: .3rem;
+    padding: .5rem;
+    color: black;
     text-decoration: none;
     cursor: pointer;
 
     &:hover {
-      text-shadow: 0 0 1px rgba(244, 249, 246, 0.92);
+      background: black;
+      color: white;
     }
   }
 `

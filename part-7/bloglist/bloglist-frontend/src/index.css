@@ -18,28 +18,27 @@
   margin-bottom: 10px;
 }
 
-h1 {
-  color: blue;
-  text-align: center;
+body, html {
+  font-family: 'Roboto', sans-serif;
 }
 
-h2 {
-  color: rgb(6, 80, 150);
+h1, h2 {
   text-align: center;
-}
-
-h3 {
-  color: rgb(8, 27, 94);
 }
 
 button {
+  padding: .2rem;
   color: rgb(249, 249, 249);
   background: rgb(33, 47, 79);
-  border: 1px solid gold;
-  margin: 3px 0;
+  border: 1px thick white;
+  border-radius: .5rem;
 }
 
 button:hover {
   text-shadow: 0 0 1px rgba(244, 249, 246, 0.92);
+}
+
+ul {
+  list-style-type: square;
 }
 

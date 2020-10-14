@@ -14,10 +14,6 @@ const Users = ({users}) => {
 
   const userLoggedIn = useSelector((state) => state.login)
 
-  const padding = {
-    paddingRight: 20
-  }
-
   return (
     userLoggedIn &&
     <>
@@ -29,7 +25,7 @@ const Users = ({users}) => {
       <Table>
         <thead>
           <tr>
-            <th></th>
+            <th>Users</th>
             <th>Blogs created</th>
           </tr>
         </thead>
@@ -37,14 +33,14 @@ const Users = ({users}) => {
           {
             users.map(user =>
               <tr key={user.id}>
-                <td style={padding}>
+                <Td>
                   <Link to={`/users/${user.id}`}>
                     {user.name}
                   </Link>
-                </td>
-                <td style={padding}>
+                </Td>
+                <Td>
                   {user.blogs.length}
-                </td>
+                </Td>
               </tr>
             )
           }
@@ -55,21 +51,28 @@ const Users = ({users}) => {
 }
 
 const Table = styled.table`
-  background: rgb(232, 222, 222);
+  background: rgb(175, 244, 253);
+  border: thick double black;
   padding: 2rem;
-  margin: auto;
-  border-radius: 5rem;
+  margin: 0 auto;
+  min-width: 80%;
+  min-height: 20rem;
+  border-radius: 4rem;
 
   & a {
-    color: rgb(114, 114, 114);
+    color: black;
     text-decoration: none;
     cursor: pointer;
 
     &:hover {
-      color: blue;
-      text-shadow: 0 0 1px rgba(244, 249, 246, 0.92);
+      text-decoration: underline;
     }
   }
+`
+
+const Td = styled.td`
+  text-align: center;
+  width: 50%;
 `
 
 export default Users

@@ -12,6 +12,8 @@ import {
 
 import Notification from './Notification'
 
+import styled from 'styled-components'
+
 const Blog = ({ blogs }) => {
 
   const dispatch = useDispatch()
@@ -52,7 +54,7 @@ const Blog = ({ blogs }) => {
   }
 
   return (
-    <>
+    <StyleDiv>
       <div>
         <Notification />
         <h1>Blogs App</h1>
@@ -70,14 +72,14 @@ const Blog = ({ blogs }) => {
           />
           <button type='submit'>add comment</button>
         </form>
-        <ul>
+        <Ul>
           {
             blog.comments
               .map((comment, index) =>
                   <li key={index}>{comment}</li>
               )
           }
-        </ul>
+        </Ul>
         <p>
           {
             loggedUser.username === blog.user.username &&
@@ -87,7 +89,23 @@ const Blog = ({ blogs }) => {
           }
         </p>
       </div>
-    </>
+    </StyleDiv>
   )}
+
+const StyleDiv = styled.div`
+  width: 25%;
+  margin: 2rem auto;
+  border: thick double black;
+  border-radius: 5rem;
+  padding: 2rem;
+  background: rgb(247, 237, 130);
+
+  & a {
+  color: black;
+  }
+`
+const Ul = styled.ul`
+  list-style-position: inside;
+`
 
 export default Blog

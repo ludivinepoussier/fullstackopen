@@ -68,18 +68,20 @@ const List = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgb(232, 222, 222);
+  border: thick double black;
   padding: 2rem;
   border-radius: 5rem;
+  background: rgb(210, 241, 181);
+  max-width: 80%;
+  margin: 0 auto;
 
   & a {
-    color: rgb(114, 114, 114);
+    color: black;
     text-decoration: none;
     cursor: pointer;
 
     &:hover {
-      color: blue;
-      text-shadow: 0 0 1px rgba(244, 249, 246, 0.92);
+      text-decoration: underline;
     }
   }
 `
