@@ -54,42 +54,44 @@ const Blog = ({ blogs }) => {
   }
 
   return (
-    <StyleDiv>
-      <div>
-        <Notification />
-        <h1>Blogs App</h1>
-      </div>
-      <div>
-        <h2>{`${blog.title}`}</h2>
-        <p><a href={blog.url}>{blog.url}</a></p>
-        <p>{`${blog.likes} likes`} <button id='like-button' onClick={() => addLikes(blog)}>like</button> </p>
-        <p>added by {blog.author}</p>
-        <h3>comments</h3>
-        <form onSubmit={(e) => addComment(e, blog.id)}>
-          <input 
-          name='comment'
-          type='text'
-          />
-          <button type='submit'>add comment</button>
-        </form>
-        <Ul>
-          {
-            blog.comments
-              .map((comment, index) =>
-                  <li key={index}>{comment}</li>
-              )
-          }
-        </Ul>
-        <p>
-          {
-            loggedUser.username === blog.user.username &&
-        <Link to="/">
-          <button type='button' value={blog.id} onClick={() => removeBlog(blog)}>remove</button>
-        </Link>
-          }
-        </p>
-      </div>
-    </StyleDiv>
+    <>
+      <Notification />
+      <StyleDiv>
+        <div>
+          <h1>Blogs App</h1>
+        </div>
+        <div>
+          <h2>{`${blog.title}`}</h2>
+          <p><a href={blog.url}>{blog.url}</a></p>
+          <p>{`${blog.likes} likes`} <button id='like-button' onClick={() => addLikes(blog)}>like</button> </p>
+          <p>added by {blog.author}</p>
+          <h3>comments</h3>
+          <form onSubmit={(e) => addComment(e, blog.id)}>
+            <input 
+            name='comment'
+            type='text'
+            />
+            <button type='submit'>add comment</button>
+          </form>
+          <Ul>
+            {
+              blog.comments
+                .map((comment, index) =>
+                    <li key={index}>{comment}</li>
+                )
+            }
+          </Ul>
+          <p>
+            {
+              loggedUser.username === blog.user.username &&
+          <Link to="/">
+            <button type='button' value={blog.id} onClick={() => removeBlog(blog)}>remove</button>
+          </Link>
+            }
+          </p>
+        </div>
+      </StyleDiv>
+    </>
   )}
 
 const StyleDiv = styled.div`
