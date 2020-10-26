@@ -1,10 +1,10 @@
 import React from 'react'
 
 const Authors = (props) => {
-  if (!props.show) {
-    return null
-  }
-  const authors = []
+
+  if (!props.show) return null
+
+  const authors = props.authors.loading ? [] : props.authors.data.allAuthors
 
   return (
     <div>
@@ -21,7 +21,7 @@ const Authors = (props) => {
             </th>
           </tr>
           {authors.map(a =>
-            <tr key={a.name}>
+            <tr key={a.id}>
               <td>{a.name}</td>
               <td>{a.born}</td>
               <td>{a.bookCount}</td>
