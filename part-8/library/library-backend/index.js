@@ -84,8 +84,8 @@ const typeDefs = gql`
   type Book {
     title: String!
     published: Int!
-    author: String!
-    genres: [String!]
+    author: Author!
+    genres: [String!]!
     id: ID!
   }
 
