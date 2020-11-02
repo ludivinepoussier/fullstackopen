@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer, gql, UserInputError } = require('apollo-server')
 // const uuid = require('uuid/v1')
 
 const mongoose = require('mongoose')
@@ -90,18 +90,33 @@ const resolvers = {
         published: args.published,
         genres: args.genres
       })
-      let authorId = await Author.findOne({ name: args.author }).select('id')
-      if (!authorId) {
-        const newAuthor = new Author({ name: args.author })
-        await newAuthor.save()
-        authorId = newAuthor.id
+
+      try {
+        let authorId = await Author.findOne({ name: args.author }).select('id')
+        if (!authorId) {
+          const newAuthor = new Author({ name: args.author })
+          await newAuthor.save()
+          authorId = newAuthor.id
+        }
+        newBook.author = authorId
+        await newBook.save()
+
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
       }
-      newBook.author = authorId
-      await newBook.save()
       return Book.findOne({title: args.title}).populate('author')
     },
-    editAuthor: (root, args) => {
-      return Author.findOneAndUpdate({name: args.name}, {born: args.born}, {new: true})
+    editAuthor: async (root, args) => {
+      try {
+        await Author.findOneAndUpdate({ name: args.name }, { born: args.born }, { new: true })
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      }
+      return Author.findOne({name: args.name})
     }
   }
 }
