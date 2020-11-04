@@ -8,6 +8,13 @@ export const LOGIN = gql`
   }
 `
 
+export const USER = gql`{
+  me {
+    username
+    favoriteGenre
+  }
+}`
+
 export const ALL_AUTHORS = gql`
 query {
   allAuthors  {
@@ -27,6 +34,7 @@ query {
       name
     }
     published
+    genres
     id
   }
 }

@@ -1,10 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+
+import Genres from './Genres'
 
 const Books = (props) => {
 
-  if (!props.show) return null
+  const [booksToShow, setBooksToShow] = useState([])
+  const [genres, setGenres] = useState([])
 
   const books = props.books.loading ? [] : props.books.data.allBooks
+
+  useEffect(() => {
+    const genresArray = books.reduce((acc, cur) => {
+      return acc.concat(cur.genres)
+    }, [])
+
+    setGenres(Array.from(new Set(genresArray)));
+    setBooksToShow(books)
+  }, [books]) // eslint-disable-line
+
+  if (!props.show) return null
+
+  const genreSelected = genre => {
+    setBooksToShow(books.filter(book => book.genres.includes(genre)))
+  }
+
+  const clearGenreFilter = () => {
+    setBooksToShow(books)
+  }
 
   return (
     <div>
@@ -13,15 +35,11 @@ const Books = (props) => {
       <table>
         <tbody>
           <tr>
-            <th></th>
-            <th>
-              author
-            </th>
-            <th>
-              published
-            </th>
+            <th>book</th>
+            <th>author</th>
+            <th>published</th>
           </tr>
-          {books.map(a =>
+          {booksToShow.map(a =>
             <tr key={a.id}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
@@ -30,6 +48,7 @@ const Books = (props) => {
           )}
         </tbody>
       </table>
+      <Genres genres={genres} genreSelected={genreSelected} clear={clearGenreFilter} />
     </div>
   )
 }
