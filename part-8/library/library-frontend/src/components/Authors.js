@@ -36,9 +36,11 @@ const Authors = ({ authors, token, show }) => {
           <tbody>
             <tr>
               <th></th>
+              <th>&nbsp;</th>
               <th>
                 born
               </th>
+              <th>&nbsp;</th>
               <th>
                 books
               </th>
@@ -46,7 +48,9 @@ const Authors = ({ authors, token, show }) => {
             {authorsData.map(author =>
               <tr key={author.id}>
                 <td>{author.name}</td>
+                <td>&nbsp;</td>
                 <td>{author.born}</td>
+                <td>&nbsp;</td>
                 <td>{author.bookCount}</td>
               </tr>
             )}
@@ -63,9 +67,11 @@ const Authors = ({ authors, token, show }) => {
         <tbody>
           <tr>
             <th></th>
+            <th>&nbsp;</th>
             <th>
               born
               </th>
+            <th>&nbsp;</th>
             <th>
               books
               </th>
@@ -73,7 +79,9 @@ const Authors = ({ authors, token, show }) => {
           {authorsData.map(author =>
             <tr key={author.id}>
               <td>{author.name}</td>
+              <td>&nbsp;</td>
               <td>{author.born}</td>
+              <td>&nbsp;</td>
               <td>{author.bookCount}</td>
             </tr>
           )}

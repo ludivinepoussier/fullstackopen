@@ -1,7 +1,6 @@
 require('dotenv').config()
 const { ApolloServer, gql, UserInputError, AuthenticationError } = require('apollo-server')
 const jwt = require('jsonwebtoken')
-// const uuid = require('uuid/v1')
 
 const mongoose = require('mongoose')
 
@@ -54,6 +53,7 @@ const typeDefs = gql`
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
     me: User
+    allGenres: [String]!
   }
 
   type Mutation {
@@ -107,6 +107,9 @@ const resolvers = {
     },
     me: (root, args, context) => {
       return context.currentUser
+    },
+    allGenres: async () => {
+      return await Book.find({}).distinct('genres')
     },
   },
   Mutation: {
