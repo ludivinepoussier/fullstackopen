@@ -28,10 +28,24 @@ const App = () => {
     }, 10000)
   }
 
+  const updateCacheWith = (addedBook) => {
+    const includedIn = (set, object) =>
+      set.map(p => p.id).includes(object.id)
+
+    const dataInStore = client.readQuery({ query: ALL_BOOKS })
+    if (!includedIn(dataInStore.allBooks, addedBook)) {
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: { allBooks: dataInStore.allBooks.concat(addedBook) }
+      })
+    }
+  }
+
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
       const addedBook = subscriptionData.data.bookAdded
       notify(`The book "${addedBook.title}" was added`)
+      updateCacheWith(addedBook)
     }
   })
 
@@ -79,7 +93,7 @@ const App = () => {
 
       <Recommendations show={page === 'recommend'} books={books} user={user} />
 
-      <NewBook show={page === 'add'} setPage={setPage} />
+      <NewBook show={page === 'add'} setPage={setPage} updateCacheWith={updateCacheWith} />
 
     </div>
   )
