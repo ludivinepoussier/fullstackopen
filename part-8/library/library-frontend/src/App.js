@@ -6,10 +6,9 @@ import LoginForm from './components/LoginForm'
 import Notify from './components/Notify'
 import Recommendations from './components/Recommendations'
 
-import { useQuery, useApolloClient } from '@apollo/client'
+import { useQuery, useSubscription, useApolloClient } from '@apollo/client'
 
-import { ALL_AUTHORS, USER } from './queries'
-import { ALL_BOOKS } from './queries'
+import { ALL_AUTHORS, USER, ALL_BOOKS, BOOK_ADDED } from './queries'
 
 const App = () => {
   const [token, setToken] = useState(null)
@@ -28,6 +27,13 @@ const App = () => {
       setErrorMessage(null)
     }, 10000)
   }
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const addedBook = subscriptionData.data.bookAdded
+      notify(`The book "${addedBook.title}" was added`)
+    }
+  })
 
   if (!token) {
     return (
