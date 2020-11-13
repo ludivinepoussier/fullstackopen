@@ -1,3 +1,24 @@
+interface CalculateValues {
+  value1: number[];
+  value2: number;
+}
+
+const verifyArguments = (args: Array<string>): CalculateValues => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+
+  const inputValues = args.slice(2);
+  const inputNumbers = inputValues.map(it => Number(it));
+
+  if (!inputValues.some(it => isNaN(Number(it)))) {
+    return {
+      value1: inputNumbers,
+      value2: inputNumbers.pop(),
+    };
+  } else {
+    throw new Error('Provided values were not numbers!');
+  }
+};
+
 interface calculatorResult {
   periodLength: number;
   trainingDays: number;
@@ -28,7 +49,7 @@ const calculateExercises = (dailyHours: number[], targetNum: number): calculator
   }
   else if (average === targetNum) {
     rating = 2;
-    ratingDescription = 'Well done, you achieved your goals!'
+    ratingDescription = 'Well done, you achieved your goals!';
   }
 
   return {
@@ -43,4 +64,9 @@ const calculateExercises = (dailyHours: number[], targetNum: number): calculator
 
 }
 
-console.log(calculateExercises([1, 2, 3, 4, 5, 0, 0], 2))
+try {
+  const { value1, value2 } = verifyArguments(process.argv);
+  console.log(calculateExercises(value1, value2));
+} catch (e) {
+  console.log('Error, something bad happened, message: ', e.message);
+}
