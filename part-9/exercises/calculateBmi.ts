@@ -1,7 +1,7 @@
 type Result = string;
 
 const calculateBmi = (height: number, weight: number): Result => {
-  let bmi = weight / ((height / 100) ** 2);
+  const bmi = weight / ((height / 100) ** 2);
   if (bmi < 18.5) {
     return 'Underweight';
   } else if (bmi < 25) {
@@ -12,6 +12,6 @@ const calculateBmi = (height: number, weight: number): Result => {
     return 'Obese';
   }
 
-}
+};
 
-export default calculateBmi
+export default calculateBmi;

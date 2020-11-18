@@ -7,16 +7,14 @@ const verifyArguments = (args: Array<string>): CalculateValues => {
   if (args.length < 4) throw new Error('Not enough arguments');
 
   const inputValues = args.slice(2);
+  if (inputValues.some(it => isNaN(Number(it)) && it === undefined)) throw new Error('Provided values were not numbers!');
+
   const inputNumbers = inputValues.map(it => Number(it));
 
-  if (!inputValues.some(it => isNaN(Number(it)))) {
-    return {
-      value1: inputNumbers,
-      value2: inputNumbers.pop(),
-    };
-  } else {
-    throw new Error('Provided values were not numbers!');
-  }
+  return {
+    value1: inputNumbers,
+    value2: Number(inputNumbers.pop()),
+  };
 };
 
 interface calculatorResult {
@@ -56,17 +54,19 @@ const calculateExercises = (dailyHours: number[], targetNum: number): calculator
     periodLength,
     trainingDays,
     success,
-    rating,
-    ratingDescription,
+    rating: Number(rating),
+    ratingDescription: JSON.stringify(ratingDescription),
     target,
     average,
-  }
+  };
 
-}
+};
 
 try {
   const { value1, value2 } = verifyArguments(process.argv);
   console.log(calculateExercises(value1, value2));
 } catch (e) {
-  console.log('Error, something bad happened, message: ', e.message);
+  if (e instanceof Error) {
+    console.log('Error, something bad happened, message: ', e.message);
+  }
 }
