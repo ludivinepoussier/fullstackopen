@@ -1,0 +1,6 @@
+POST http://localhost:3003/exercises 
+Content-Type: application/json
+
+{
+"daily_exercises": [3, 3, 3, 0, 4, 5, 6], "target": 4
+}
