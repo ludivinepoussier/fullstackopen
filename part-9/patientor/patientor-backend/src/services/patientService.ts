@@ -1,11 +1,26 @@
-import patients from '../data/patient';
-import { Patient, PatientLessSsn } from '../types';
+import patientData from '../data/patient.json';
+import { Patient, NewPatient } from '../types';
 
-const getPatients = (): Patient[] => patients;
+const patients: Patient[] = patientData;
 
-const getPatientsLessSsn = (): PatientLessSsn[] => 
-  patients.map(
-    ({ id, name, dateOfBirth, gender, occupation }) => ({ id, name, dateOfBirth, gender, occupation })
-  );
+const getPatients = (): Omit<Patient, 'ssn'>[] => {
+  return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
+    id,
+    name,
+    dateOfBirth,
+    gender,
+    occupation,
+  }));
+};
 
-export default { getPatients, getPatientsLessSsn };
+const addPatient = (patient: NewPatient): Patient => {
+  const newPatient = {
+    id: (patients.length + 1).toString(),
+    ...patient,
+  };
+
+  patients.push(newPatient);
+  return newPatient;
+};
+
+export default { getPatients, addPatient };

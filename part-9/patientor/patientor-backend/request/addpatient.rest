@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/patients
+Content-Type: application/json
+
+{
+  "name": "Celia",
+  "dateOfBirth": "1980-10-16",
+  "gender": "female",
+  "occupation": "teacher"
+}

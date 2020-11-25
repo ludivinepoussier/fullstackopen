@@ -1,6 +1,3 @@
-import { Diagnose } from '../types';
-
-const diagnoses: Diagnose[] =
 [
   {
     "code": "M24.2",
@@ -14,17 +11,13 @@ const diagnoses: Diagnose[] =
   },
   {
     "code": "S03.5",
-    "name":
-      "Sprain and strain of joints and ligaments of other and unspecified parts of head",
-    "latin":
-      "Distorsio et/sive distensio articulationum et/sive ligamentorum partium aliarum sive non specificatarum capitis"
+    "name": "Sprain and strain of joints and ligaments of other and unspecified parts of head",
+    "latin": "Distorsio et/sive distensio articulationum et/sive ligamentorum partium aliarum sive non specificatarum capitis"
   },
   {
     "code": "J10.1",
-    "name":
-      "Influenza with other respiratory manifestations, other influenza virus codeentified",
-    "latin":
-      "Influenza cum aliis manifestationibus respiratoriis ab agente virali codeentificato"
+    "name": "Influenza with other respiratory manifestations, other influenza virus codeentified",
+    "latin": "Influenza cum aliis manifestationibus respiratoriis ab agente virali codeentificato"
   },
   {
     "code": "J06.9",
@@ -79,6 +72,4 @@ const diagnoses: Diagnose[] =
     "name": "Other proliferative retinopathy",
     "latin": "Alia retinopathia proliferativa"
   }
-];
-
-export default diagnoses;
+]
