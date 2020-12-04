@@ -28,6 +28,14 @@ const parseDateOfBirth = (dateOfBirth: any): string => {
   return dateOfBirth;
 };
 
+const parseSSN = (ssn: any): string => {
+  if (!ssn || !isString(ssn)) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    throw new Error(`Incorrect or missing SSN ${ssn}`);
+  }
+  return ssn;
+};
+
 const parseOccupation = (occupation: any): string => {
   if (!occupation || !isString(occupation)) {
     throw new Error('Incorrect or missing occupation: ' + occupation);
@@ -48,8 +56,10 @@ const parsedNewPatient = (object: any): NewPatient => {
   const newPatient: NewPatient = {
     name: parseName(object.name),
     dateOfBirth: parseDateOfBirth(object.dateOfBirth),
+    ssn: parseSSN(object.ssn),
     occupation: parseOccupation(object.occupation),
     gender: parseGender(object.gender),
+    entries: [],
   };
 
   return newPatient;
