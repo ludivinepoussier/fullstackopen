@@ -10,7 +10,7 @@ import {
   OccupationalHealthcareEntry,
   HealthCheckEntry,
   BaseEntry,
-  Diagnose,
+  Diagnosis,
 } from './types';
 
 const isString = (text: any): text is string => {
@@ -81,7 +81,7 @@ const isHealthCheckEntry = (entry: any): entry is HealthCheckEntry => {
 
 const parseDiagnosis = (
   diagnosisCodes: any
-): diagnosisCodes is Array<Diagnose['code']> => {
+): diagnosisCodes is Array<Diagnosis['code']> => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   return diagnosisCodes.every((diagnosisCode: any) => isString(diagnosisCode));
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Icon } from "semantic-ui-react";
-import { Patient } from '../types';
+import { Patient, Entry, Diagnosis } from '../types';
 import { apiBaseUrl } from '../constants';
 import { useStateValue } from '../state';
 import { useParams } from 'react-router-dom';
@@ -40,8 +40,24 @@ const PatientView: React.FC = () => {
       <h1>{patient.name} <Icon className={patient.gender} /> </h1>
       <p>SSN: {patient.ssn}</p>
       <p>Occupation: {patient.occupation}</p>
+      <h2>entries</h2>
+        {patient.entries.map((entry: Entry) => {
+          return (
+            <div key={entry.id}>
+              <p>{entry.date} {entry.description}</p>
+              <ul>
+                {entry.diagnosisCodes &&
+                  entry.diagnosisCodes.map(
+                    (diagonsisCode: Diagnosis['code']) => (
+                      <li key={diagonsisCode}>{diagonsisCode}</li>
+                    )
+                  )}
+              </ul>
+            </div>
+          )
+        })}
     </div>
   );
-};
+}
 
 export default PatientView;
