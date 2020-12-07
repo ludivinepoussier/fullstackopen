@@ -6,6 +6,7 @@ import { apiBaseUrl } from '../constants';
 import { useStateValue } from '../state';
 import { useParams } from 'react-router-dom';
 import { setFetchedPatient, setDiagnosisList } from '../state';
+import EntryDetails from '../components/EntryDetails';
 
 const PatientView: React.FC = () => {
 
@@ -59,16 +60,17 @@ const PatientView: React.FC = () => {
       <h2>entries</h2>
         {patient.entries.map((entry: Entry) => {
           return (
-            <div key={entry.id}>
-              <p>{entry.date} {entry.description}</p>
-              <ul>
-                {entry.diagnosisCodes &&
-                  entry.diagnosisCodes.map(
-                    (diagonsisCode: Diagnosis['code']) => (
-                      <li key={diagonsisCode}>{diagonsisCode} {diagnoses.find(d => d.code === diagonsisCode)?.name}</li>
-                    )
-                  )}
-              </ul>
+            <div 
+              key={entry.id} 
+              style={{
+                border: 'solid 2px lightgrey',
+                marginTop: 10,
+                marginBottom: 10,
+                padding: 5,
+                borderRadius: 5,
+              }}
+            >
+              <EntryDetails entry={entry} />
             </div>
           )
         })}
