@@ -1,4 +1,4 @@
-import patients from '../data/patient.json';
+import patients from '../data/patients';
 import { PublicPatient, Patient, NewPatient } from '../types';
 
 const getPatients = (): PublicPatient[] => {
@@ -14,10 +14,7 @@ const getPatients = (): PublicPatient[] => {
 };
 
 const getPatientByID = (id: string): Patient | undefined => {
-  const pub = patients.find((pub: PublicPatient) => pub.id === id);
-  if(pub === undefined) return undefined;
-
-  return { ...pub, entries: [] };
+  return patients.find((patient) => patient.id === id);
 };
 
 const addPatient = (patient: NewPatient): Patient => {
