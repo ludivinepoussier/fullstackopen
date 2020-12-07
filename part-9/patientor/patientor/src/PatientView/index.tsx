@@ -5,11 +5,11 @@ import { Patient, Entry, Diagnosis } from '../types';
 import { apiBaseUrl } from '../constants';
 import { useStateValue } from '../state';
 import { useParams } from 'react-router-dom';
-import { setFetchedPatient } from '../state';
+import { setFetchedPatient, setDiagnosisList } from '../state';
 
 const PatientView: React.FC = () => {
 
-  const [{ patientDetails }, dispatch] = useStateValue();
+  const [{ patientDetails, diagnoses }, dispatch] = useStateValue();
   const { id } = useParams<{ id: string }>();
   const [patient, setPatient] = React.useState<Patient>();
 
@@ -26,14 +26,30 @@ const PatientView: React.FC = () => {
       }
     }
 
+    async function fetchDiagnosisList() {
+      try {
+        const { data: diagnoses } = await axios.get<Diagnosis[]>(
+          `${apiBaseUrl}/diagnoses`
+        );
+        dispatch(setDiagnosisList(diagnoses));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     if (patientDetails[id]) {
       setPatient(patientDetails[id]);
     } else {
       getPatient();
     }
-  }, [dispatch, id, patientDetails]);
 
-  if (!patient) return <div>Loading...</div>;
+    if (Object.values(diagnoses).length === 0) {
+      fetchDiagnosisList();
+    }
+  }, [dispatch, id, patientDetails, diagnoses]);
+
+
+  if (!patient || !diagnoses) return <div>Loading...</div>;
 
   return (
     <div>
@@ -49,7 +65,7 @@ const PatientView: React.FC = () => {
                 {entry.diagnosisCodes &&
                   entry.diagnosisCodes.map(
                     (diagonsisCode: Diagnosis['code']) => (
-                      <li key={diagonsisCode}>{diagonsisCode}</li>
+                      <li key={diagonsisCode}>{diagonsisCode} {diagnoses.find(d => d.code === diagonsisCode)?.name}</li>
                     )
                   )}
               </ul>
