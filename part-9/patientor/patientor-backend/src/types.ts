@@ -40,6 +40,18 @@ export interface OccupationalHealthcareEntry extends BaseEntry {
   };
 }
 
+export type newHealthCheckEntry = Omit<HealthCheckEntry, 'id'>;
+export type newHospitalEntry = Omit<HospitalEntry, 'id'>;
+export type newOccupationalHealthcareEntry = Omit<
+  OccupationalHealthcareEntry,
+  'id'
+>;
+
+export type NewEntry =
+  | newHealthCheckEntry
+  | newHospitalEntry
+  | newOccupationalHealthcareEntry;
+
 export type Entry =
   | HospitalEntry
   | OccupationalHealthcareEntry

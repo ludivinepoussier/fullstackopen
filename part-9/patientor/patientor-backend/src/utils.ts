@@ -11,6 +11,7 @@ import {
   HealthCheckEntry,
   BaseEntry,
   Diagnosis,
+  NewEntry,
 } from './types';
 
 const isString = (text: any): text is string => {
@@ -44,6 +45,26 @@ const isBaseEntry = (entry: any): entry is BaseEntry => {
 
   return entry;
 };
+
+const isNewBaseEntry = (entry: any): entry is BaseEntry => {
+  if (entry.diagnosisCodes) {
+    if (!parseDiagnosis(entry.diagnosisCodes)) {
+      throw new Error('Incorrect Diagnosis Code');
+    }
+  }
+
+  if (
+    !entry ||
+    !isString(entry.description) ||
+    !isDate(entry.date) ||
+    !isString(entry.specialist)
+  ) {
+    throw new Error('Incorrect description, date or specialist');
+  }
+
+  return entry;
+};
+
 const isHospitalEntry = (entry: any): entry is HospitalEntry => {
   if (entry.discharge) {
     return (
@@ -158,4 +179,20 @@ const parsedNewPatient = (object: any): NewPatient => {
   return newPatient;
 };
 
-export default parsedNewPatient;
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const parsedNewEntry = (object: any): NewEntry => {
+  if (!isNewBaseEntry(object)) {
+    throw new Error('Missing base entry');
+  }
+  if (isHospitalEntry(object)) {
+    return object;
+  } else if (isOccupationalHealthcareEntry(object)) {
+    return object;
+  } else if (isHealthCheckEntry(object)) {
+    return object;
+  } else {
+    throw new Error(`Not an entry from the above types.`);
+  }
+};
+
+export default { parsedNewPatient, parsedNewEntry };

@@ -1,6 +1,6 @@
 import express from 'express';
 import patientService from '../services/patientService';
-import parsedNewPatient from '../utils';
+import utils from '../utils';
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   try {
-    const newPatient = parsedNewPatient(req.body);
+    const newPatient = utils.parsedNewPatient(req.body);
 
     const addedPatient = patientService.addPatient(newPatient);
 
@@ -28,6 +28,17 @@ router.post('/', (req, res) => {
   } catch (e) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     res.status(400).send(e.message);
+  }
+});
+
+router.post('/:id/entries', (req, res) => {
+  try {
+    const newEntry = utils.parsedNewEntry(req.body);
+    const patientId = req.params.id;
+    const addedEntry = patientService.addEntry(newEntry, patientId);
+    res.json(addedEntry);
+  } catch (error) {
+    res.status(400).send('Something went wrong!');
   }
 });
 
